@@ -277,7 +277,11 @@ header {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* --- PROJETOS --- */
+/* --- PROJETOS (Ajustado Espaçamento) --- */
+#projetos {
+  margin-bottom: 4rem; /* Garante distância segura para a seção de contato */
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -298,6 +302,7 @@ header {
 .project-card:hover {
   transform: translateY(-5px);
   border-color: var(--accent);
+  box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.15); /* Destaque sutil no hover */
 }
 
 .project-header {
@@ -324,7 +329,7 @@ header {
 }
 
 .project-techs .tag {
-  background: rgba(99, 102, 241, 0.1);
+  background: rgba(99, 102, 241, 0.15);
   color: var(--accent);
   border: none;
 }
@@ -334,6 +339,7 @@ header {
   gap: 1rem;
   border-top: 1px solid var(--border);
   padding-top: 1rem;
+  margin-top: auto; /* Garante alinhamento dos botões no rodapé do card */
 }
 
 .project-links a {
@@ -350,15 +356,21 @@ header {
   color: var(--accent);
 }
 
-/* --- CONTATO E FOOTER --- */
+/* --- CONTATO E FOOTER (Isolamento do Card) --- */
+#contato {
+  padding-top: 2rem;
+  padding-bottom: 6rem;
+}
+
 .contact-box {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 3rem 2rem;
+  padding: 3.5rem 2rem;
   text-align: center;
-  max-width: 700px;
+  max-width: 750px;
   margin: 0 auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
 }
 
 .contact-box h2 {
@@ -409,4 +421,5 @@ footer {
   .hero h1 { font-size: 2.3rem; }
   .about-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
+  #projetos { margin-bottom: 2rem; }
 }
