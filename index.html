@@ -19,6 +19,9 @@
 
     <!-- CSS Externo -->
     <link rel="stylesheet" href="style.css" />
+
+    <!-- JS Externo (Modularizado) -->
+    <script src="main.js" defer></script>
   </head>
   <body>
     <!-- HEADER / NAVEGAÇÃO -->
@@ -41,9 +44,8 @@
       </div>
     </header>
 
-    <!-- HERO SECTION 1 (Fotos Empilhadas + Título Editorial) -->
+    <!-- HERO SECTION 1 -->
     <section class="hero-section container">
-
         <div class="hero-title-block">
           <h1 class="main-title">Desenvolverdora de software, com foco em <br /> soluções praticas para o dia a dia </h1>
           <p class="subtitle">
@@ -57,19 +59,38 @@
         </div>
     </section>
 
-    <!-- HERO SECTION 2 (Fotos Lado a Lado na Horizontal) -->
-    <section class="hero-secondary container">
+     <!-- TRABALHOS ANTERIORES / PROJETOS -->
+    <section id="projetos" class="container">
       <div class="editorial-grid">
         <div class="side-title">
-          <h2>PORTFÓLIO<br />CRIATIVO</h2>
+          <h2>TRABALHOS<br />ANTERIORES</h2>
         </div>
-        <div class="hero-gallery-h">
-          <div class="photo-placeholder float-left">
-            <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=85" alt="Interior arquitetônico minimalista" />
+        <div class="projects-editorial-list">
+          
+          <div class="project-editorial-card">
+            <div class="project-image-box">
+              <span class="project-overlay-text">Pratine — E-commerce & Gestão</span>
+            </div>
+            <p class="project-caption">Estruturação técnica de marca e plataforma de e-commerce. Modelagem de dados relacionais para controle de catálogo e regras de pedido.</p>
+            <a href="https://github.com/seu-usuario/pratine" target="_blank" class="project-link"><i class="fa-brands fa-github"></i> Ver Código</a>
           </div>
-          <div class="photo-placeholder float-right">
-            <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=85" alt="Espaço contemporâneo de trabalho" />
+
+          <div class="project-editorial-card">
+            <div class="project-image-box">
+              <span class="project-overlay-text">Controle de Estoque & Gestão</span>
+            </div>
+            <p class="project-caption">Sistema de gerenciamento com cadastro de variações, histórico de movimentações, precificação e backend com controle de acesso (RLS).</p>
+            <a href="https://github.com/seu-usuario/simulador-financeiro" target="_blank" class="project-link"><i class="fa-brands fa-github"></i> Ver Código</a>
           </div>
+
+          <div class="project-editorial-card">
+            <div class="project-image-box">
+              <span class="project-overlay-text">CRM API RESTful</span>
+            </div>
+            <p class="project-caption">Backend estruturado para gerenciamento de contatos e funil de vendas com rotas autenticadas e validação rigorosa.</p>
+            <a href="https://github.com/seu-usuario/crm-api" target="_blank" class="project-link"><i class="fa-brands fa-github"></i> Ver Código</a>
+          </div>
+
         </div>
       </div>
     </section>
@@ -90,45 +111,6 @@
           <p>
             O grande divisor de águas na minha jornada foi participar do Transforme-se (bootcamp do Serasa). Foi ali que virei a chave, me reconectei de vez com a área de TI e vivi uma experiência marcante que consolidou meu foco em seguir crescendo como desenvolvedora.
           </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- TRABALHOS ANTERIORES / PROJETOS -->
-    <section id="projetos" class="container">
-      <div class="editorial-grid">
-        <div class="side-title">
-          <h2>TRABALHOS<br />ANTERIORES</h2>
-        </div>
-        <div class="projects-editorial-list">
-          
-          <!-- Projeto 1 -->
-          <div class="project-editorial-card">
-            <div class="project-image-box">
-              <span class="project-overlay-text">Pratine — E-commerce & Gestão</span>
-            </div>
-            <p class="project-caption">Estruturação técnica de marca e plataforma de e-commerce. Modelagem de dados relacionais para controle de catálogo e regras de pedido.</p>
-            <a href="https://github.com/seu-usuario/pratine" target="_blank" class="project-link"><i class="fa-brands fa-github"></i> Ver Código</a>
-          </div>
-
-          <!-- Projeto 2 -->
-          <div class="project-editorial-card">
-            <div class="project-image-box">
-              <span class="project-overlay-text">Controle de Estoque & Gestão</span>
-            </div>
-            <p class="project-caption">Sistema de gerenciamento com cadastro de variações, histórico de movimentações, precificação e backend com controle de acesso (RLS).</p>
-            <a href="https://github.com/seu-usuario/simulador-financeiro" target="_blank" class="project-link"><i class="fa-brands fa-github"></i> Ver Código</a>
-          </div>
-
-          <!-- Projeto 3 -->
-          <div class="project-editorial-card">
-            <div class="project-image-box">
-              <span class="project-overlay-text">CRM API RESTful</span>
-            </div>
-            <p class="project-caption">Backend estruturado para gerenciamento de contatos e funil de vendas com rotas autenticadas e validação rigorosa.</p>
-            <a href="https://github.com/seu-usuario/crm-api" target="_blank" class="project-link"><i class="fa-brands fa-github"></i> Ver Código</a>
-          </div>
-
         </div>
       </div>
     </section>
@@ -172,7 +154,7 @@
       </div>
     </section>
 
-    <!-- COMPETÊNCIAS: OCULTAS ATÉ O CLIQUE -->
+    <!-- COMPETÊNCIAS -->
     <section id="competencias" class="container skills-section">
       <div class="editorial-grid">
         <div class="side-title">
@@ -263,26 +245,5 @@
         </div>
       </div>
     </section>
-    <script>
-      const themeToggle = document.getElementById("themeToggle");
-      const savedTheme = localStorage.getItem("portfolio-theme");
-
-      if (savedTheme === "dark") {
-        document.body.classList.add("dark-mode");
-        themeToggle.setAttribute("aria-pressed", "true");
-        themeToggle.setAttribute("aria-label", "Ativar modo claro");
-        themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
-      }
-
-      themeToggle.addEventListener("click", () => {
-        const isDark = document.body.classList.toggle("dark-mode");
-        localStorage.setItem("portfolio-theme", isDark ? "dark" : "light");
-        themeToggle.setAttribute("aria-pressed", String(isDark));
-        themeToggle.setAttribute("aria-label", isDark ? "Ativar modo claro" : "Ativar modo escuro");
-        themeToggle.innerHTML = isDark
-          ? '<i class="fa-solid fa-sun"></i>'
-          : '<i class="fa-solid fa-moon"></i>';
-      });
-    </script>
   </body>
 </html>

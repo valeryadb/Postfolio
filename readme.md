@@ -1,22 +1,24 @@
-# 💻 Portfólio Profissional | Valérya Dias
+# 💻 Portfólio Profissional | Valérya Dias Braga
 
-Este é o repositório do meu portfólio web pessoal, desenvolvido para apresentar meus projetos de software, stack técnica e trajetória profissional como desenvolvedora.
+Este repositório contém a landing page profissional desenvolvida sob uma arquitetura limpa de 3 camadas (HTML5 Semântico, CSS3 com Variáveis e JavaScript Modular).
 
 🚀 **Link do Projeto:** [Acessar Portfólio Online](https://seu-usuario.vercel.app)
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Tecnologias & Arquitetura
 
-- **HTML5:** Estrutura semântica e acessível.
-- **CSS3:** Estilização moderna com variáveis CSS, CSS Grid, Flexbox e responsividade completa.
-- **Google Fonts & Font Awesome:** Tipografia (Inter) e ícones de tecnologia.
+- **HTML5:** Estrutura semântica e acessibilidade[cite: 11].
+- **CSS3:** Design System com variáveis `:root`, Grid, Flexbox, Animações e modo escuro nativo[cite: 11, 12].
+- **JavaScript (ES6+):** Script modularizado para alteração dinâmica de tema e persistência no `localStorage`.
+- **Google Fonts & Font Awesome:** Tipografia editorial (Bodoni Moda & Inter) e ícones[cite: 10].
 
 ---
 
 ## 📂 Estrutura do Repositório
 
 ```text
-├── index.html        # Estrutura principal da página
-├── style.css         # Estilos e variáveis de design
-└── README.md         # Documentação do repositório
+├── index.html        # Estrutura e marcação semântica
+├── style.css         # Variáveis de design e regras CSS
+├── main.js           # Lógica do tema e interatividade
+└── README.md         # Documentação da arquitetura
