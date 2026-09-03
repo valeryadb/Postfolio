@@ -747,3 +747,160 @@ body.dark-mode .main-navigation a:hover {
     width: 100%;
   }
 }
+/* =========================================================
+   BOTÃO FLUTUANTE DO WHATSAPP (TEMPORIZADO EM 20 SEGUNDOS)
+========================================================= */
+
+.wa-float-container {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
+}
+
+.wa-float-container.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.wa-float-container.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Ícone circular do WhatsApp */
+.wa-float-btn {
+  width: 60px;
+  height: 60px;
+  background-color: #25d366;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.1rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+}
+
+.wa-float-btn:hover {
+  transform: scale(1.1);
+  background-color: #20ba5a;
+  box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+}
+
+/* Balão de mensagem / conversa do assistente */
+.wa-chat-bubble {
+  position: relative;
+  background: #ffffff;
+  color: #222222;
+  padding: 1.1rem 1.3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-width: 280px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border: 1px solid #e2e2e2;
+  animation: bubblePop 0.4s ease-out;
+}
+
+@keyframes bubblePop {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.wa-bubble-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.4rem;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 0.4rem;
+}
+
+.wa-bubble-header strong {
+  font-size: 0.95rem;
+  color: #111111;
+}
+
+.wa-bubble-header span {
+  font-size: 0.75rem;
+  color: #25d366;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wa-bubble-text {
+  color: #444444;
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.wa-bubble-close {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: #888888;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.wa-bubble-close:hover {
+  color: #111111;
+}
+
+/* Estilo do balão no Dark Mode */
+body.dark-mode .wa-chat-bubble {
+  background: #1e1e1e;
+  color: #f5f5f5;
+  border-color: #333333;
+}
+
+body.dark-mode .wa-bubble-header strong {
+  color: #ffffff;
+}
+
+body.dark-mode .wa-bubble-text {
+  color: #cccccc;
+}
+
+body.dark-mode .wa-bubble-close {
+  color: #aaaaaa;
+}
+
+/* Ajustes no Mobile */
+@media (max-width: 600px) {
+  .wa-float-container {
+    bottom: 20px;
+    right: 20px;
+  }
+  .wa-float-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 1.8rem;
+  }
+  .wa-chat-bubble {
+    max-width: 240px;
+    font-size: 0.82rem;
+  }
+}
