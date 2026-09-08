@@ -45,20 +45,3 @@ document.addEventListener("DOMContentLoaded", () => {
       <i class="fa-brands fa-whatsapp"></i>
     </a>
   `;
-
-  document.body.appendChild(waContainer);
-
-  // Exibir o botão e o balão após 20 segundos
-  setTimeout(() => {
-    waContainer.classList.remove("hidden");
-    waContainer.classList.add("visible");
-  }, 20000); // 20.000 ms = 20 segundos
-
-  // Fechar o balão de mensagem ao clicar no 'x'
-  document.addEventListener("click", (e) => {
-    if (e.target && e.target.id === "waBubbleClose") {
-      const bubble = document.getElementById("waChatBubble");
-      if (bubble) bubble.style.display = "none";
-    }
-  });
-});
