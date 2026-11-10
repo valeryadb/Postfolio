@@ -16,10 +16,8 @@
       content="Back-end, APIs RESTful e bancos de dados aplicados a soluções práticas."
     />
     <meta property="og:type" content="website" />
-    <!-- Depois do deploy, atualize com a URL final: -->
-    <!-- <meta property="og:url" content="https://valeryadb.github.io/portfolio/" /> -->
 
-    <!-- Favicon (monograma V. em SVG inline — sem arquivo extra) -->
+    <!-- Favicon -->
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23161616'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' font-style='italic' fill='%23ffffff' text-anchor='middle'%3EV.%3C/text%3E%3C/svg%3E"
@@ -44,9 +42,7 @@
     <script src="main.js" defer></script>
   </head>
   <body>
-    <!-- Aplica o tema salvo ANTES da primeira pintura da página.
-         Se ficasse só no main.js (defer), a página pintava clara e
-         "piscava" para o escuro — o clássico flash of incorrect theme. -->
+    <!-- Aplica o tema salvo ANTES da primeira pintura da página -->
     <script>
       try {
         if (localStorage.getItem("portfolio-theme") === "dark") {
@@ -74,7 +70,6 @@
           <button class="theme-toggle" id="themeToggle" type="button" aria-label="Ativar modo escuro" aria-pressed="false">
             <i class="fa-solid fa-moon"></i>
           </button>
-          <!-- Menu hambúrguer: só aparece no mobile (CSS) -->
           <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
             <i class="fa-solid fa-bars"></i>
           </button>
@@ -92,7 +87,7 @@
           <div class="hero-buttons">
             <a href="#projetos" class="btn btn-primary"><i class="fa-solid fa-code"></i> Ver Trabalhos</a>
             <a href="#contato" class="btn btn-outline"><i class="fa-regular fa-envelope"></i> Contato</a>
-            <a href="assets/pdf/cv-valerya-dias.pdf" class="btn btn-outline" download><i class="fa-solid fa-file-arrow-down"></i> Baixar CV</a>
+            <a href="https://docs.google.com/document/d/1HBNmJp4C0isj385TGZ3g0_h1r-iUI1tk841Z1lr83BE/edit?usp=sharing" class="btn btn-outline" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-arrow-down"></i> Ver / Baixar CV</a>
           </div>
         </div>
     </section>
@@ -178,18 +173,38 @@
           </div>
 
           <div class="resume-section-group">
-            <h3>EDUCAÇÃO</h3>
+            <h3>EDUCAÇÃO &amp; CERTIFICAÇÕES</h3>
             <div class="resume-item">
               <h4>Análise e Desenvolvimento de Sistemas</h4>
-              <p class="resume-sub">Universidade Pitágoras Unopar</p>
+              <p class="resume-sub">Universidade Pitágoras Unopar — Previsão 2027</p>
             </div>
             <div class="resume-item">
-              <h4>Formação Full Stack (670h)</h4>
-              <p class="resume-sub">SENAI-DF</p>
+              <h4>Formação Full Stack Avançada (670h)</h4>
+              <p class="resume-sub">SENAI-DF — Conclusão 11/2026</p>
             </div>
             <div class="resume-item">
-              <h4>Bootcamp Transforme-se</h4>
-              <p class="resume-sub">Serasa</p>
+              <h4>Programador de Sistemas</h4>
+              <p class="resume-sub">SENAC-DF — 2025</p>
+            </div>
+            <div class="resume-item">
+              <h4>Programa Transforme-se</h4>
+              <p class="resume-sub">Serasa Experian &amp; SENAC-DF</p>
+            </div>
+            <div class="resume-item">
+              <h4>Claude Cowork: Produtividade e Gestão de Projetos Inteligente (6h)</h4>
+              <p class="resume-sub">Alura — 2026</p>
+            </div>
+            <div class="resume-item">
+              <h4>Produtividade: Otimizando sua Rotina com Inteligência Artificial (6h)</h4>
+              <p class="resume-sub">Alura — 2026</p>
+            </div>
+            <div class="resume-item">
+              <h4>Cursos Complementares de JavaScript, Python e SQL</h4>
+              <p class="resume-sub">Alura &amp; DIO</p>
+            </div>
+            <div class="resume-item">
+              <h4>Inglês em Desenvolvimento</h4>
+              <p class="resume-sub">Fluency Academy</p>
             </div>
           </div>
 
@@ -298,8 +313,8 @@
             </p>
           </div>
 
-          <a href="assets/pdf/cv-valerya-dias.pdf" class="btn btn-footer-cv" download>
-            <i class="fa-solid fa-file-arrow-down"></i> Baixar currículo
+          <a href="https://docs.google.com/document/d/1HBNmJp4C0isj385TGZ3g0_h1r-iUI1tk841Z1lr83BE/edit?usp=sharing" class="btn btn-footer-cv" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-file-arrow-down"></i> Ver / Baixar currículo
           </a>
 
           <p class="copyright-text">© Valérya Dias. Desenvolvedora de Software.</p>
