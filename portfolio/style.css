@@ -27,6 +27,10 @@ body {
   color: var(--text-dark);
   font-family: var(--font-body);
   line-height: 1.8;
+  /* Rede de segurança: se algo estourar a largura da tela, corta o
+     estouro em vez de deixar o navegador mobile "dar zoom out" na
+     página inteira (a causa da formatação encolhida no celular). */
+  overflow-x: hidden;
 }
 
 a {
@@ -186,7 +190,11 @@ header {
 
 .main-title {
   font-family: var(--font-display);
-  font-size: 3.6rem;
+  /* clamp: escala com a tela. O piso/teto garantem legibilidade; o 8vw
+     garante que "DESENVOLVEDORA" (14 maiúsculas inquebráveis) nunca
+     fique mais larga que o viewport — era ela que estourava no celular
+     e forçava o zoom-out da página inteira. */
+  font-size: clamp(2.1rem, 8vw, 3.6rem);
   font-weight: 700;
   text-transform: uppercase;
   line-height: 1.12;
@@ -795,13 +803,19 @@ body.dark-mode .wa-bubble-close {
     text-align: left;
   }
 
-  .main-title {
-    font-size: 3rem;
-  }
+  /* .main-title já escala sozinha via clamp() — sem override fixo aqui */
 
   .side-title h2 {
-    font-size: 2.5rem;
+    font-size: clamp(1.9rem, 7.5vw, 2.5rem);
     position: static;
+  }
+
+  /* No mobile, os respiros do desktop viram espaço morto: antes do
+     contato somavam ~370px de vazio (padding da seção anterior +
+     margin + padding do rodapé). Compactando. */
+  .footer-dark-section {
+    margin-top: 2rem;
+    padding: 5rem 0 3rem;
   }
 
   .menu-toggle {
