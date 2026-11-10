@@ -174,106 +174,97 @@
         <header class="section-head">
           <h2 id="projetos-titulo">Projetos</h2>
           <p>Sistemas com código aberto no GitHub</p>
-          <div class="rotation-controls" role="group" aria-label="Rotação dos projetos">
-            <button
-              class="rotation-btn rotation-arrow"
-              id="projectsPrev"
-              type="button"
-              aria-controls="projectsList"
-              aria-label="Projeto anterior"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <polyline points="15 4 7 12 15 20" />
-              </svg>
-            </button>
-            <button
-              class="rotation-btn rotation-arrow"
-              id="projectsNext"
-              type="button"
-              aria-controls="projectsList"
-              aria-label="Próximo projeto"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <polyline points="9 4 17 12 9 20" />
-              </svg>
-            </button>
-            <button
-              class="rotation-btn"
-              id="projectsToggle"
-              type="button"
-              aria-controls="projectsList"
-              aria-pressed="false"
-            >
-              Pausar
-            </button>
-          </div>
         </header>
         <p class="visually-hidden" id="projectsStatus" aria-live="polite"></p>
 
         <!-- Os projetos se revezam: o primeiro da lista vira destaque -->
-        <div class="projects" id="projectsList">
-          <article class="story" id="proj-estoque">
-            <figure class="photo">
-              <img
-                src="assets/img/controle.jpg"
-                alt="Ilustração das etapas de gestão de estoque: leitura de código, movimentação, conferência e expedição"
-                loading="lazy"
-              />
-              <figcaption>Ilustração: etapas da gestão de estoque.</figcaption>
-            </figure>
-            <h3>Controle de Estoque</h3>
-            <p>
-              Sistema de gerenciamento com cadastro de variações, histórico de
-              movimentações, precificação e back-end com controle de acesso por
-              linha (RLS).
-            </p>
-            <a
-              href="https://github.com/valeryadb/controle-estoque"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="story-link"
-              ><i class="fa-brands fa-github" aria-hidden="true"></i> Ver código no GitHub</a
-            >
-          </article>
+        <div class="projects-stage">
+          <button
+            class="rotation-btn rotation-arrow projects-arrow projects-arrow-prev"
+            id="projectsPrev"
+            type="button"
+            aria-controls="projectsList"
+            aria-label="Projeto anterior"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <polyline points="15 4 7 12 15 20" />
+            </svg>
+          </button>
+          <div class="projects" id="projectsList">
+            <article class="story" id="proj-estoque">
+              <figure class="photo">
+                <img
+                  src="assets/img/controle.jpg"
+                  alt="Ilustração das etapas de gestão de estoque: leitura de código, movimentação, conferência e expedição"
+                  loading="lazy"
+                />
+                <figcaption>Ilustração: etapas da gestão de estoque.</figcaption>
+              </figure>
+              <h3>Controle de Estoque</h3>
+              <p>
+                Sistema de gerenciamento com cadastro de variações, histórico de
+                movimentações, precificação e back-end com controle de acesso por
+                linha (RLS).
+              </p>
+              <a
+                href="https://github.com/valeryadb/controle-estoque"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="story-link"
+                ><i class="fa-brands fa-github" aria-hidden="true"></i> Ver código no GitHub</a
+              >
+            </article>
 
-          <article class="story" id="proj-crm">
-            <figure class="photo">
-              <img
-                src="assets/img/crm.webp"
-                alt="Ilustração do ciclo de um CRM: metas, atendimento, conversas e resultados"
-                loading="lazy"
-              />
-              <figcaption>Ilustração: o ciclo de um CRM.</figcaption>
-            </figure>
-            <h3>CRM com API RESTful</h3>
-            <p>
-              Back-end para gerenciar contatos e funil de vendas, com rotas
-              autenticadas e validação rigorosa dos dados.
-            </p>
-            <a
-              href="https://github.com/valeryadb/crm-system"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="story-link"
-              ><i class="fa-brands fa-github" aria-hidden="true"></i> Ver código no GitHub</a
-            >
-          </article>
+            <article class="story" id="proj-crm">
+              <figure class="photo">
+                <img
+                  src="assets/img/crm.webp"
+                  alt="Ilustração do ciclo de um CRM: metas, atendimento, conversas e resultados"
+                  loading="lazy"
+                />
+                <figcaption>Ilustração: o ciclo de um CRM.</figcaption>
+              </figure>
+              <h3>CRM com API RESTful</h3>
+              <p>
+                Back-end para gerenciar contatos e funil de vendas, com rotas
+                autenticadas e validação rigorosa dos dados.
+              </p>
+              <a
+                href="https://github.com/valeryadb/crm-system"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="story-link"
+                ><i class="fa-brands fa-github" aria-hidden="true"></i> Ver código no GitHub</a
+              >
+            </article>
 
-          <article class="story" id="proj-pratine">
-            <h3>Pratine</h3>
-            <p>
-              Estruturação técnica de marca e plataforma de e-commerce.
-              Modelagem de dados relacionais para controle de catálogo e regras
-              de pedido.
-            </p>
-            <a
-              href="https://github.com/valeryadb/pratine"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="story-link"
-              ><i class="fa-brands fa-github" aria-hidden="true"></i> Ver código no GitHub</a
-            >
-          </article>
+            <article class="story" id="proj-pratine">
+              <h3>Pratine</h3>
+              <p>
+                Estruturação técnica de marca e plataforma de e-commerce.
+                Modelagem de dados relacionais para controle de catálogo e regras
+                de pedido.
+              </p>
+              <a
+                href="https://github.com/valeryadb/pratine"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="story-link"
+                ><i class="fa-brands fa-github" aria-hidden="true"></i> Ver código no GitHub</a
+              >
+            </article>
+          </div>
+          <button
+            class="rotation-btn rotation-arrow projects-arrow projects-arrow-next"
+            id="projectsNext"
+            type="button"
+            aria-controls="projectsList"
+            aria-label="Próximo projeto"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <polyline points="9 4 17 12 9 20" />
+            </svg>
+          </button>
         </div>
       </section>
 

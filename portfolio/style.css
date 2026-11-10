@@ -474,12 +474,6 @@ img {
   color: var(--graphite);
 }
 
-.rotation-controls {
-  margin-left: auto;
-  display: flex;
-  gap: 0.4rem;
-}
-
 .rotation-btn {
   display: inline-flex;
   align-items: center;
@@ -533,6 +527,46 @@ img {
 /* A rotação (classe ProjectRotator no main.js) anima cada projeto da
    posição antiga até a nova em arco. Origem no canto superior esquerdo
    para a escala acompanhar a translação. */
+/* Setas nas laterais dos projetos, na altura das ilustrações.
+   Em telas sem espaço lateral, descem para baixo da lista. */
+.projects-stage {
+  position: relative;
+}
+
+.projects-arrow {
+  position: absolute;
+  top: clamp(110px, 12vw, 180px);
+  z-index: 3;
+  background: var(--paper);
+}
+
+.projects-arrow-prev {
+  left: -3.4rem;
+}
+
+.projects-arrow-next {
+  right: -3.4rem;
+}
+
+@media (max-width: 1280px) {
+  .projects-stage {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .projects-stage > .projects {
+    order: -1;
+    flex-basis: 100%;
+    margin-bottom: 1.25rem;
+  }
+
+  .projects-arrow {
+    position: static;
+  }
+}
+
 .projects {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);

@@ -157,7 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
     new ProjectRotator(projectsList, {
       prevButton: document.getElementById("projectsPrev"),
       nextButton: document.getElementById("projectsNext"),
-      toggleButton: document.getElementById("projectsToggle"),
       status: document.getElementById("projectsStatus"),
       reducedMotion,
     });
@@ -212,9 +211,8 @@ document.addEventListener("DOMContentLoaded", () => {
      da reta, então o caminho vira um arco e os três juntos desenham o
      ciclo do rascunho (sentido anti-horário no "Próximo").
 
-   Rotação automática a cada 7 s, pausada pelo botão (WCAG 2.2.2), ao
-   focar um projeto pelo teclado, fora da tela, com a aba oculta e no
-   celular. Com movimento reduzido, a troca é instantânea.
+   Rotação automática a cada 7 s, pausada ao focar um projeto pelo
+   teclado, fora da tela, com a aba oculta e no celular. Com movimento reduzido, a troca é instantânea.
 ==================================================================== */
 class ProjectRotator {
   static INTERVAL = 7000;
