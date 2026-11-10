@@ -19,18 +19,19 @@
       content="Back-end, APIs RESTful e bancos de dados aplicados a soluções práticas."
     />
     <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#F3F2EE" />
 
-    <!-- Favicon -->
+    <!-- Favicon: "V" em serifa -->
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23161616'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' font-style='italic' fill='%23ffffff' text-anchor='middle'%3EV.%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231B1B1B'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' fill='%23F3F2EE' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E"
     />
 
-    <!-- Fontes & Ícones -->
+    <!-- Fontes: Newsreader (nome e texto); Libre Franklin (apoio) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&display=swap"
       rel="stylesheet"
     />
     <link
@@ -38,15 +39,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
 
-    <!-- CSS Externo -->
     <link rel="stylesheet" href="style.css" />
-
-    <!-- JS Externo (Modularizado) -->
     <script src="main.js" defer></script>
   </head>
   <body>
     <!-- Aplica o tema salvo ANTES da primeira pintura da página -->
     <script>
+      document.documentElement.classList.add("js");
       try {
         if (localStorage.getItem("portfolio-theme") === "dark") {
           document.body.classList.add("dark-mode");
@@ -54,22 +53,14 @@
       } catch (e) {}
     </script>
 
-    <!-- HEADER / NAVEGAÇÃO -->
-    <header>
-      <div class="container nav-container">
-        <a href="#" class="logo">Valérya<span>.dev</span></a>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-        <nav id="mainNav">
-          <ul class="nav-links" id="navLinks">
-            <li><a href="#projetos">Trabalhos</a></li>
-            <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#experiencia">Experiência</a></li>
-            <li><a href="#competencias">Competências</a></li>
-            <li><a href="#contato">Contato</a></li>
-          </ul>
-        </nav>
-
-        <div class="nav-actions">
+    <!-- CABEÇALHO DE JORNAL -->
+    <header class="masthead">
+      <div class="container">
+        <div class="masthead-bar">
+          <p class="dateline" id="dateline">Brasília, DF</p>
+          <p class="edition">Portfólio, edição de 2026</p>
           <button
             class="theme-toggle"
             id="themeToggle"
@@ -77,72 +68,184 @@
             aria-label="Ativar modo escuro"
             aria-pressed="false"
           >
-            <i class="fa-solid fa-moon"></i>
+            <i class="fa-solid fa-moon" aria-hidden="true"></i>
+            <span class="theme-toggle-text">Edição noturna</span>
           </button>
-          <button
-            class="menu-toggle"
-            id="menuToggle"
-            type="button"
-            aria-label="Abrir menu"
-            aria-expanded="false"
-            aria-controls="navLinks"
-          >
-            <i class="fa-solid fa-bars"></i>
-          </button>
+        </div>
+
+      </div>
+
+      <!-- Faixa de vídeo: a cidade em movimento, em preto e branco.
+           Os clipes entram em sequência pelo main.js; com movimento
+           reduzido, fica só o pôster (primeiro quadro). -->
+      <div class="city-band">
+        <video
+          class="city-video is-active"
+          muted
+          playsinline
+          preload="none"
+          poster="assets/video/cidade-poster.jpg"
+          aria-hidden="true"
+        ></video>
+        <video
+          class="city-video"
+          muted
+          playsinline
+          preload="none"
+          aria-hidden="true"
+        ></video>
+        <div class="container city-band-inner">
+          <a href="#" class="nameplate" aria-label="Valérya Dias, início">Valérya Dias</a>
         </div>
       </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero-section container">
-      <div class="hero-title-block">
-        <h1 class="main-title">
-          Desenvolvedora de software, com foco em soluções práticas para o dia a
-          dia
-        </h1>
-        <p class="subtitle">
-          Desenvolvedora de Software focada em Back-end, APIs RESTful, bancos de
-          dados e inteligência artificial aplicadas a soluções práticas.
-        </p>
-        <div class="hero-buttons">
-          <a href="#projetos" class="btn btn-primary"
-            ><i class="fa-solid fa-code"></i> Ver Trabalhos</a
-          >
-          <a href="#contato" class="btn btn-outline"
-            ><i class="fa-regular fa-envelope"></i> Contato</a
-          >
-          <a
-            href="https://docs.google.com/document/d/1HBNmJp4C0isj385TGZ3g0_h1r-iUI1tk841Z1lr83BE/edit?usp=sharing"
-            class="btn btn-outline"
-            target="_blank"
-            rel="noopener noreferrer"
-            ><i class="fa-solid fa-file-arrow-down"></i> Ver / Baixar CV</a
-          >
+    <nav class="sections-nav" aria-label="Seções">
+        <div class="container">
+          <ul>
+            <li><a href="#projetos">Projetos</a></li>
+            <li><a href="#sobre">Perfil</a></li>
+            <li><a href="#experiencia">Carreira</a></li>
+            <li><a href="#competencias">Competências</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
         </div>
-      </div>
-    </section>
+      </nav>
 
-    <!-- TRABALHOS / PROJETOS -->
-    <section id="projetos" class="container section-divider">
-      <div class="editorial-grid">
-        <div class="side-title">
-          <h2>PROJETOS<br />ANTERIORES</h2>
-        </div>
-        <div class="projects-editorial-list">
-          <!-- PROJETO 1: PRATINE -->
-          <div class="project-editorial-card">
-            <div class="project-image-box">
+    <main id="conteudo">
+      <!-- PRIMEIRA PÁGINA -->
+      <section class="front container" aria-labelledby="manchete">
+        <article class="lead-story">
+          <h1 id="manchete">
+            Desenvolvedora de Brasília transforma regras de negócio em sistemas
+            para o dia a dia
+          </h1>
+          <p class="deck">
+            Valérya Dias trabalha com back-end, APIs RESTful, bancos de dados e
+            inteligência artificial aplicada a problemas práticos. Escreve em
+            Node.js, TypeScript, Python e SQL.
+          </p>
+          <div class="actions">
+            <a href="#projetos" class="btn btn-primary">Ver projetos</a>
+            <a
+              href="https://docs.google.com/document/d/1HBNmJp4C0isj385TGZ3g0_h1r-iUI1tk841Z1lr83BE/edit?usp=sharing"
+              class="btn btn-outline"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Abrir currículo</a
+            >
+            <a href="#contato" class="text-link">Entrar em contato</a>
+          </div>
+        </article>
+
+        <aside class="index-box" aria-labelledby="indice-titulo">
+          <h2 id="indice-titulo">Nesta edição</h2>
+          <ul>
+            <li>
+              <a href="#projetos">
+                <strong>Projetos</strong>
+                <span>Estoque, CRM e e-commerce, com código aberto no GitHub.</span>
+              </a>
+            </li>
+            <li>
+              <a href="#sobre">
+                <strong>Perfil</strong>
+                <span>Da auditoria de dados em ERPs ao desenvolvimento.</span>
+              </a>
+            </li>
+            <li>
+              <a href="#experiencia">
+                <strong>Carreira</strong>
+                <span>Experiência, graduação em ADS e formação Full Stack.</span>
+              </a>
+            </li>
+            <li>
+              <a href="#contato">
+                <strong>Classificados</strong>
+                <span>E-mail, WhatsApp, LinkedIn e currículo.</span>
+              </a>
+            </li>
+          </ul>
+        </aside>
+      </section>
+
+      <!-- PROJETOS -->
+      <section id="projetos" class="section container" aria-labelledby="projetos-titulo">
+        <header class="section-head">
+          <h2 id="projetos-titulo">Projetos</h2>
+          <p>Sistemas com código aberto no GitHub</p>
+          <div class="rotation-controls" role="group" aria-label="Rotação dos projetos">
+            <button class="rotation-btn" id="projectsPrev" type="button" aria-controls="projectsList">
+              <i class="fa-solid fa-chevron-left" aria-hidden="true"></i> Anterior
+            </button>
+            <button class="rotation-btn" id="projectsNext" type="button" aria-controls="projectsList">
+              Próximo <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            </button>
+            <button
+              class="rotation-btn"
+              id="projectsToggle"
+              type="button"
+              aria-controls="projectsList"
+              aria-pressed="false"
+            >
+              Pausar
+            </button>
+          </div>
+        </header>
+        <p class="visually-hidden" id="projectsStatus" aria-live="polite"></p>
+
+        <!-- Os projetos se revezam: o primeiro da lista vira destaque -->
+        <div class="projects" id="projectsList">
+          <article class="story" id="proj-estoque">
+            <figure class="photo">
               <img
-                src="assets/img/pratine.png"
-                alt="Preview da plataforma Pratine"
-                class="project-img"
+                src="assets/img/controle.jpg"
+                alt="Ilustração das etapas de gestão de estoque: leitura de código, movimentação, conferência e expedição"
                 loading="lazy"
               />
-              <span class="project-overlay-text"
-                >Pratine — E-commerce &amp; Gestão</span
-              >
-            </div>
-            <p class="project-caption">
+              <figcaption>Ilustração: etapas da gestão de estoque.</figcaption>
+            </figure>
+            <h3>Controle de Estoque</h3>
+            <p>
+              Sistema de gerenciamento com cadastro de variações, histórico de
+              movimentações, precificação e back-end com controle de acesso por
+              linha (RLS).
+            </p>
+            <a
+              href="https://github.com/valeryadb/controle-estoque"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="story-link"
+              ><i class="fa-brands fa-github" aria-hidden="true"></i> Ver código no GitHub</a
+            >
+          </article>
+
+          <article class="story" id="proj-crm">
+            <figure class="photo">
+              <img
+                src="assets/img/crm.webp"
+                alt="Ilustração do ciclo de um CRM: metas, atendimento, conversas e resultados"
+                loading="lazy"
+              />
+              <figcaption>Ilustração: o ciclo de um CRM.</figcaption>
+            </figure>
+            <h3>CRM com API RESTful</h3>
+            <p>
+              Back-end para gerenciar contatos e funil de vendas, com rotas
+              autenticadas e validação rigorosa dos dados.
+            </p>
+            <a
+              href="https://github.com/valeryadb/crm-system"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="story-link"
+              ><i class="fa-brands fa-github" aria-hidden="true"></i> Ver código no GitHub</a
+            >
+          </article>
+
+          <article class="story" id="proj-pratine">
+            <h3>Pratine</h3>
+            <p>
               Estruturação técnica de marca e plataforma de e-commerce.
               Modelagem de dados relacionais para controle de catálogo e regras
               de pedido.
@@ -151,279 +254,257 @@
               href="https://github.com/valeryadb/pratine"
               target="_blank"
               rel="noopener noreferrer"
-              class="project-link"
-              ><i class="fa-brands fa-github"></i> Ver Código</a
+              class="story-link"
+              ><i class="fa-brands fa-github" aria-hidden="true"></i> Ver código no GitHub</a
             >
+          </article>
+        </div>
+      </section>
+
+      <!-- PERFIL -->
+      <section id="sobre" class="section container" aria-labelledby="sobre-titulo">
+        <header class="section-head">
+          <h2 id="sobre-titulo">Perfil</h2>
+          <p>Quem escreve este código</p>
+        </header>
+
+        <div class="profile">
+          <div class="profile-text">
+            <p class="has-dropcap">
+              Graduanda em Análise e Desenvolvimento de Sistemas pela Unopar e
+              em conclusão da Formação Full Stack do SENAI-DF.
+            </p>
+            <p>
+              Minha trajetória combina raciocínio lógico forte, auditoria e
+              conciliação de dados em ERPs, controle de regras de negócio e
+              desenvolvimento funcional com Node.js, TypeScript, Python e SQL.
+            </p>
+            <p>
+              O grande divisor de águas na minha jornada foi participar do
+              Transforme-se, o bootcamp da Serasa. Foi ali que virei a chave, me
+              reconectei de vez com a área de TI e vivi uma experiência marcante
+              que consolidou meu foco em seguir crescendo como desenvolvedora.
+            </p>
           </div>
 
-          <!-- PROJETO 2: CONTROLE DE ESTOQUE -->
-          <div class="project-editorial-card">
-            <div class="project-image-box">
-              <img
-                src="assets/img/controle.jpg"
-                alt="Preview do Controle de Estoque"
-                class="project-img"
-                loading="lazy"
-              />
-              <span class="project-overlay-text">Controle de Estoque</span>
-            </div>
-            <p class="project-caption">
-              Sistema de gerenciamento com cadastro de variações, histórico de
-              movimentações, precificação e backend com controle de acesso
-              (RLS).
+          <blockquote class="pullquote">
+            <p>“Foi ali que virei a chave, me reconectei de vez com a área de TI.”</p>
+            <cite>Sobre o Transforme-se, bootcamp da Serasa Experian</cite>
+          </blockquote>
+        </div>
+      </section>
+
+      <!-- CARREIRA -->
+      <section id="experiencia" class="section container" aria-labelledby="carreira-titulo">
+        <header class="section-head">
+          <h2 id="carreira-titulo">Carreira</h2>
+          <p>Experiência, formação e certificações</p>
+        </header>
+
+        <div class="career">
+          <div class="career-group">
+            <h3>Experiência</h3>
+            <ul class="record">
+              <li>
+                <span class="record-title">Desenvolvimento back-end e soluções web</span>
+                <span class="record-org">Projetos autônomos e e-commerce</span>
+              </li>
+              <li>
+                <span class="record-title">Auditoria de dados e processos operacionais</span>
+                <span class="record-org">Gestão de negócios e ERPs</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="career-group">
+            <h3>Formação e certificações</h3>
+            <ul class="record">
+              <li>
+                <span class="record-title">Análise e Desenvolvimento de Sistemas</span>
+                <span class="record-org">Universidade Pitágoras Unopar</span>
+                <span class="record-date">Previsão 2027</span>
+              </li>
+              <li>
+                <span class="record-title">Formação Full Stack Avançada (670h)</span>
+                <span class="record-org">SENAI-DF</span>
+                <span class="record-date">Conclusão 11/2026</span>
+              </li>
+              <li>
+                <span class="record-title">Programador de Sistemas</span>
+                <span class="record-org">SENAC-DF</span>
+                <span class="record-date">2025</span>
+              </li>
+              <li>
+                <span class="record-title">Programa Transforme-se</span>
+                <span class="record-org">Serasa Experian e SENAC-DF</span>
+              </li>
+              <li>
+                <span class="record-title">Claude Cowork: produtividade e gestão de projetos inteligente (6h)</span>
+                <span class="record-org">Alura</span>
+                <span class="record-date">2026</span>
+              </li>
+              <li>
+                <span class="record-title">Produtividade: otimizando sua rotina com inteligência artificial (6h)</span>
+                <span class="record-org">Alura</span>
+                <span class="record-date">2026</span>
+              </li>
+              <li>
+                <span class="record-title">Inglês</span>
+                <span class="record-org">Fluency Academy</span>
+                <span class="record-date">Em andamento</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPETÊNCIAS -->
+      <section id="competencias" class="section container" aria-labelledby="competencias-titulo">
+        <header class="section-head">
+          <h2 id="competencias-titulo">Competências</h2>
+          <p>O que aplico no trabalho</p>
+        </header>
+
+        <div class="skills">
+          <div class="skills-col">
+            <h3>Técnicas</h3>
+            <ul>
+              <li>Node.js</li>
+              <li>TypeScript</li>
+              <li>JavaScript (ES6+)</li>
+              <li>Python</li>
+              <li>APIs RESTful</li>
+              <li>Webhooks</li>
+              <li>SQL</li>
+              <li>PostgreSQL</li>
+              <li>MySQL</li>
+              <li>Modelagem relacional</li>
+              <li>Git e GitHub</li>
+              <li>Testes unitários</li>
+              <li>Documentação de APIs</li>
+              <li>Scrum e Kanban</li>
+              <li>GitHub Copilot e Claude AI</li>
+            </ul>
+          </div>
+          <div class="skills-col">
+            <h3>Comportamentais</h3>
+            <ul>
+              <li>Raciocínio lógico</li>
+              <li>Resolução de problemas</li>
+              <li>Atenção aos detalhes e conciliação</li>
+              <li>Organização e estruturação</li>
+              <li>Aprendizado rápido e contínuo</li>
+              <li>Comunicação objetiva</li>
+              <li>Trabalho em equipe</li>
+              <li>Orientação a prazos</li>
+              <li>Visão de processos de negócio</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTATO: CLASSIFICADOS -->
+      <section id="contato" class="section container" aria-labelledby="contato-titulo">
+        <header class="section-head">
+          <h2 id="contato-titulo">Classificados</h2>
+          <p>Contato</p>
+        </header>
+
+        <div class="classifieds">
+          <article class="ad ad-main">
+            <h3>Desenvolvedora back&#8209;end</h3>
+            <p>
+              Node.js, TypeScript, Python e SQL. APIs RESTful, modelagem de
+              dados e atenção às regras de negócio. Brasília, DF.
             </p>
+            <dl class="ad-contacts">
+              <div>
+                <dt>E-mail</dt>
+                <dd><a href="mailto:valeryadev@gmail.com">valeryadev@gmail.com</a></dd>
+              </div>
+              <div>
+                <dt>WhatsApp</dt>
+                <dd>
+                  <a
+                    href="https://wa.me/5561981715225?text=Ol%C3%A1%20Val%C3%A9rya%2C%20vim%20pelo%20seu%20portf%C3%B3lio."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >(61) 98171-5225</a
+                  >
+                </dd>
+              </div>
+            </dl>
             <a
-              href="https://github.com/valeryadb/controle-estoque"
+              href="https://docs.google.com/document/d/1HBNmJp4C0isj385TGZ3g0_h1r-iUI1tk841Z1lr83BE/edit?usp=sharing"
+              class="btn btn-primary"
               target="_blank"
               rel="noopener noreferrer"
-              class="project-link"
-              ><i class="fa-brands fa-github"></i> Ver Código</a
+              >Abrir currículo</a
             >
-          </div>
-
-          <!-- PROJETO 3: CRM API RESTFUL -->
-          <div class="project-editorial-card">
-            <div class="project-image-box">
-              <img
-                src="assets/img/crm.webp"
-                alt="Preview do CRM API RESTful"
-                class="project-img"
-                loading="lazy"
-              />
-              <span class="project-overlay-text">CRM</span>
-            </div>
-            <p class="project-caption">
-              Backend estruturado para gerenciamento de contatos e funil de
-              vendas com rotas autenticadas e validação rigorosa.
-            </p>
-            <a
-              href="https://github.com/valeryadb/crm-system"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="project-link"
-              ><i class="fa-brands fa-github"></i> Ver Código</a
-            >
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SOBRE MIM -->
-    <section id="sobre" class="container section-divider">
-      <div class="editorial-grid flip">
-        <div class="side-title">
-          <h2>SOBRE<br />MIM</h2>
-        </div>
-        <div class="content-block about-text">
-          <p>
-            Graduanda em
-            <span class="highlight"
-              >Análise e Desenvolvimento de Sistemas (Unopar)</span
-            >
-            e em conclusão da Formação Full Stack
-            <span class="highlight">SENAI-DF</span>.
-          </p>
-          <p>
-            Minha trajetória combina raciocínio lógico forte, auditoria e
-            conciliação de dados em ERPs, controle de regras de negócio e
-            desenvolvimento funcional com
-            <span class="highlight">Node.js, TypeScript, Python e SQL</span>.
-          </p>
-          <p>
-            O grande divisor de águas na minha jornada foi participar do
-            Transforme-se (bootcamp do Serasa). Foi ali que virei a chave, me
-            reconectei de vez com a área de TI e vivi uma experiência marcante
-            que consolidou meu foco em seguir crescendo como desenvolvedora.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXPERIÊNCIA & EDUCAÇÃO -->
-    <section id="experiencia" class="container section-divider">
-      <div class="editorial-grid center">
-        <div class="content-block resume-editorial">
-          <div class="resume-section-group">
-            <h3>EXPERIÊNCIA</h3>
-            <div class="resume-item">
-              <h4>Desenvolvimento Back-end &amp; Soluções Web</h4>
-              <p class="resume-sub">Projetos Autônomos &amp; E-commerce</p>
-            </div>
-            <div class="resume-item">
-              <h4>Auditoria de Dados &amp; Processos Operacionais</h4>
-              <p class="resume-sub">Gestão de Negócios &amp; ERPs</p>
-            </div>
-          </div>
-
-          <div class="resume-section-group">
-            <h3>EDUCAÇÃO <span class="amp">&amp;</span> CERTIFICAÇÕES</h3>
-            <div class="resume-item">
-              <h4>Análise e Desenvolvimento de Sistemas</h4>
-              <p class="resume-sub">
-                Universidade Pitágoras Unopar — Previsão 2027
-              </p>
-            </div>
-            <div class="resume-item">
-              <h4>Formação Full Stack Avançada (670h)</h4>
-              <p class="resume-sub">SENAI-DF — Conclusão 11/2026</p>
-            </div>
-            <div class="resume-item">
-              <h4>Programador de Sistemas</h4>
-              <p class="resume-sub">SENAC-DF — 2025</p>
-            </div>
-            <div class="resume-item">
-              <h4>Programa Transforme-se</h4>
-              <p class="resume-sub">Serasa Experian &amp; SENAC-DF</p>
-            </div>
-            <div class="resume-item">
-              <h4>
-                Claude Cowork: Produtividade e Gestão de Projetos Inteligente
-                (6h)
-              </h4>
-              <p class="resume-sub">Alura — 2026</p>
-            </div>
-            <div class="resume-item">
-              <h4>
-                Produtividade: Otimizando sua Rotina com Inteligência Artificial
-                (6h)
-              </h4>
-              <p class="resume-sub">Alura — 2026</p>
-            </div>
-            <div class="resume-item">
-              <h4>Inglês em Desenvolvimento</h4>
-              <p class="resume-sub">Fluency Academy</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- COMPETÊNCIAS -->
-    <section id="competencias" class="container skills-section section-divider">
-      <div class="editorial-grid">
-        <div class="side-title">
-          <h2>HARD <span class="amp">&amp;</span><br />SOFT<br />SKILLS</h2>
-        </div>
-
-        <div class="content-block skills-content">
-          <p class="skills-intro">
-            Visão prática das minhas competências técnicas em desenvolvimento
-            back-end e das habilidades comportamentais que aplicam precisão às
-            soluções.
-          </p>
-
-          <details class="skills-details">
-            <summary>Ver competências</summary>
-
-            <div class="skills-panel">
-              <div class="skill-group">
-                <h3>HARD SKILLS</h3>
-                <div class="skill-tags">
-                  <span>Node.js</span>
-                  <span>TypeScript</span>
-                  <span>JavaScript (ES6+)</span>
-                  <span>Python</span>
-                  <span>APIs RESTful</span>
-                  <span>Webhooks</span>
-                  <span>SQL</span>
-                  <span>PostgreSQL</span>
-                  <span>MySQL</span>
-                  <span>Modelagem Relacional</span>
-                  <span>Git &amp; GitHub</span>
-                  <span>Testes Unitários</span>
-                  <span>Documentação de APIs</span>
-                  <span>Scrum &amp; Kanban</span>
-                  <span>GitHub Copilot &amp; Claude AI</span>
-                </div>
-              </div>
-
-              <div class="skill-group">
-                <h3>SOFT SKILLS</h3>
-                <div class="skill-tags">
-                  <span>Raciocínio lógico</span>
-                  <span>Resolução de problemas</span>
-                  <span>Atenção aos detalhes &amp; Conciliação</span>
-                  <span>Organização &amp; Estruturação</span>
-                  <span>Aprendizado rápido e contínuo</span>
-                  <span>Comunicação objetiva</span>
-                  <span>Trabalho em equipe</span>
-                  <span>Orientação a prazos</span>
-                  <span>Visão de processos de negócio</span>
-                </div>
-              </div>
-            </div>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTATO / RODAPÉ ESCURO -->
-    <section id="contato" class="footer-dark-section">
-      <div class="container editorial-grid flip">
-        <div class="side-title light-text">
-          <h2>ENTRE EM<br />CONTATO</h2>
-        </div>
-        <div class="content-block contact-details">
-          <div class="contact-block-item">
-            <p class="contact-label">E-MAIL</p>
-            <a href="mailto:valeryadev@gmail.com" class="contact-value">
-              <i class="fa-solid fa-envelope contact-mini-icon"></i>
-              valeryadev@gmail.com
-            </a>
-          </div>
-
-          <div class="contact-block-item">
-            <p class="contact-label">REDES &amp; CANAIS</p>
-            <div class="social-links-text contact-links">
-              <a
-                href="https://wa.me/5561981715225?text=Ol%C3%A1%20Val%C3%A9rya%2C%20vim%20pelo%20seu%20portf%C3%B3lio."
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i class="fa-brands fa-whatsapp contact-mini-icon"></i> WhatsApp
-              </a>
-              <span class="contact-divider">|</span>
-              <a
-                href="https://www.linkedin.com/in/val%C3%A9rya-dias/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i class="fa-brands fa-linkedin-in contact-mini-icon"></i>
-                LinkedIn
-              </a>
-              <span class="contact-divider">|</span>
-              <a
-                href="https://github.com/valeryadb"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i class="fa-brands fa-github contact-mini-icon"></i> GitHub
-              </a>
-            </div>
-          </div>
-
-          <div class="contact-block-item">
-            <p class="contact-label">TELEFONE / WHATSAPP</p>
-            <p class="contact-phone">
-              <i class="fa-brands fa-whatsapp contact-mini-icon"></i> (61)
-              98171-5225
-            </p>
-          </div>
+          </article>
 
           <a
-            href="https://docs.google.com/document/d/1HBNmJp4C0isj385TGZ3g0_h1r-iUI1tk841Z1lr83BE/edit?usp=sharing"
-            class="btn btn-footer-cv"
+            class="ad"
+            href="https://www.linkedin.com/in/val%C3%A9rya-dias/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <i class="fa-solid fa-file-arrow-down"></i> Ver / Baixar currículo
+            <h3>LinkedIn</h3>
+            <p>Trajetória profissional, recomendações e novidades.</p>
+            <span class="ad-cta"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i> Ver perfil</span>
           </a>
 
-          <p class="copyright-text">
-            © Valérya Dias. Desenvolvedora de Software.
-          </p>
+          <a
+            class="ad"
+            href="https://github.com/valeryadb"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <h3>GitHub</h3>
+            <p>Código-fonte de todos os projetos desta edição.</p>
+            <span class="ad-cta"><i class="fa-brands fa-github" aria-hidden="true"></i> Ver repositórios</span>
+          </a>
         </div>
+      </section>
+    </main>
+
+    <footer class="colophon">
+      <div class="container">
+        <!-- Horizonte de Brasília: quadras, Congresso Nacional, Torre de TV.
+             Desenha-se quando o rodapé entra na tela. -->
+        <svg
+          class="skyline"
+          id="skyline"
+          viewBox="0 0 800 90"
+          preserveAspectRatio="xMidYMax meet"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <!-- quadras à esquerda -->
+          <rect pathLength="1" x="40" y="66" width="46" height="23" />
+          <rect pathLength="1" x="96" y="60" width="30" height="29" />
+          <rect pathLength="1" x="134" y="70" width="52" height="19" />
+          <rect pathLength="1" x="196" y="63" width="24" height="26" />
+          <!-- Congresso: plataforma, cúpula do Senado, torres, cuia da Câmara -->
+          <path pathLength="1" d="M300 78 H500" />
+          <path pathLength="1" d="M326 78 A20 20 0 0 1 366 78" />
+          <rect pathLength="1" x="388" y="14" width="10" height="64" />
+          <rect pathLength="1" x="404" y="14" width="10" height="64" />
+          <path pathLength="1" d="M398 42 H404" />
+          <path pathLength="1" d="M430 62 H486 Q458 84 430 62 Z" />
+          <!-- quadras e Torre de TV à direita -->
+          <rect pathLength="1" x="560" y="68" width="40" height="21" />
+          <rect pathLength="1" x="610" y="61" width="28" height="28" />
+          <path pathLength="1" d="M690 89 L700 20 L710 89 M694 58 H706 M700 20 V6" />
+          <rect pathLength="1" x="728" y="70" width="36" height="19" />
+          <!-- chão -->
+          <path pathLength="1" d="M0 89 H800" />
+        </svg>
+        <p>
+          © <span id="year">2026</span> Valérya Dias, desenvolvedora de
+          software. Feito em Brasília.
+        </p>
       </div>
-    </section>
+    </footer>
   </body>
 </html>
