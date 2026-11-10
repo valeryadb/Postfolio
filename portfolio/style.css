@@ -194,8 +194,10 @@ img {
   outline-color: #ffffff;
 }
 
-/* Horizonte de Brasília (rodapé): traço fino que se desenha uma vez,
-   quando entra na tela. Sem JS, aparece já desenhado. */
+/* Horizonte de Brasília (rodapé). Cada vez que entra na tela, o
+   main.js sorteia uma de 4 animações em data-anim (sem repetir a
+   anterior). --i = ordem da esquerda para a direita; --r = atraso
+   aleatório. Sem JS, aparece já desenhado. */
 .skyline {
   display: block;
   width: 100%;
@@ -206,25 +208,77 @@ img {
   stroke: var(--graphite);
   stroke-width: 1.25;
   stroke-linejoin: round;
+  stroke-linecap: round;
+  overflow: visible;
 }
 
 .skyline > * {
   vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+  transform-origin: 50% 100%; /* prédios crescem a partir do chão */
 }
 
-.js .skyline > * {
+/* antes de tocar, fica escondido */
+.js .skyline:not([data-anim]) > * {
+  opacity: 0;
+}
+
+/* 1. Traço: o contorno inteiro se desenha junto */
+.skyline[data-anim="draw"] > * {
   stroke-dasharray: 1;
-  stroke-dashoffset: 1;
+  animation: sky-draw 1.8s var(--ease) both;
 }
 
-.js .skyline.is-visible > * {
-  animation: draw 1.8s var(--ease) forwards;
+/* 2. Construção: os prédios sobem do chão, um depois do outro */
+.skyline[data-anim="rise"] > * {
+  animation: sky-rise 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--i) * 70ms);
 }
 
-@keyframes draw {
+/* 3. Caneta: o traço percorre a cidade da esquerda para a direita */
+.skyline[data-anim="pen"] > * {
+  stroke-dasharray: 1;
+  animation: sky-draw 0.45s ease-in-out both;
+  animation-delay: calc(var(--i) * 140ms);
+}
+
+/* 4. Luzes: os prédios piscam e acendem fora de ordem */
+.skyline[data-anim="lights"] > * {
+  animation: sky-flicker 0.9s steps(1, end) both;
+  animation-delay: calc(var(--r) * 1.4s);
+}
+
+@keyframes sky-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
   to {
     stroke-dashoffset: 0;
   }
+}
+
+@keyframes sky-rise {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes sky-flicker {
+  0% { opacity: 0; }
+  15% { opacity: 0.9; }
+  25% { opacity: 0.1; }
+  45% { opacity: 1; }
+  55% { opacity: 0.3; }
+  70%,
+  100% { opacity: 1; }
 }
 
 /* Faixa de navegação: fio duplo de jornal, fixa no topo */
@@ -444,8 +498,22 @@ img {
   border-color: var(--ink);
 }
 
-.rotation-btn i {
-  font-size: 0.7em;
+/* Setas: chevron fino com pontas arredondadas */
+.rotation-arrow {
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0;
+  justify-content: center;
+}
+
+.rotation-arrow svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .rotation-btn[hidden] {
@@ -993,12 +1061,10 @@ a.ad:hover h3 {
     scroll-behavior: auto;
   }
 
-  .js .skyline > *,
-  .js .skyline.is-visible > * {
-    animation: none;
-    stroke-dashoffset: 0;
+  .js .skyline > * {
+    animation: none !important;
+    opacity: 1 !important;
   }
-
 
   *,
   *::before,

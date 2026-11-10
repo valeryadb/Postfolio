@@ -12,22 +12,22 @@ frameworks e sem build, por decisão de projeto.
 
 - **HTML5** — estrutura semântica, acessibilidade (atributos ARIA nos
   controles interativos) e metatags Open Graph para compartilhamento.
-- **CSS3** — design system com variáveis em `:root`, Grid, Flexbox,
-  layout editorial com títulos alternados por seção e dark mode
-  implementado por sobrescrita de tokens (`body.dark-mode` redefine as
-  variáveis; os componentes não mudam).
+- **CSS3** — design system com variáveis em `:root`, Grid, Flexbox e
+  CSS columns, layout de jornal (primeira página, colunas com fios,
+  classificados) e dark mode por sobrescrita de tokens (`body.dark-mode`
+  redefine as variáveis; os componentes não mudam).
 - **JavaScript (ES6+)** — tema com persistência em `localStorage`
   (aplicado antes da primeira pintura para evitar flash do tema errado),
-  menu mobile acessível e CTA flutuante de WhatsApp temporizado.
-- **Google Fonts & Font Awesome** — tipografia editorial (Playfair
-  Display & Inter) e ícones.
+  data do dia no cabeçalho e CTA flutuante de WhatsApp temporizado.
+- **Google Fonts & Font Awesome** — Newsreader (nome e
+  texto) e Libre Franklin (apoio), além de ícones.
 
 ## 📂 Estrutura do repositório
 
 ```text
 ├── index.html        # Estrutura e marcação semântica
 ├── style.css         # Design tokens e regras CSS
-├── main.js           # Tema, menu mobile e interatividade
+├── main.js           # Tema, data e interatividade
 ├── assets/
 │   └── img/          # Previews dos projetos
 └── README.md
@@ -42,15 +42,23 @@ frameworks e sem build, por decisão de projeto.
 - **Tema aplicado inline no topo do `<body>`**: o script com `defer` só
   roda após o parse do HTML; aplicar a classe antes da primeira pintura
   elimina o "flash" do tema claro para quem usa o escuro.
-- **Paleta calibrada para conforto de leitura**: quase-preto `#1d1d1b`
-  sobre cinza quente `#e3e1dc` em vez de preto puro sobre claro —
-  contraste AAA (12,9:1) sem a vibração que o `#000/#fff` causa.
-- **Tipografia de display com contraste moderado**: Playfair Display no
-  lugar de fontes Didone extremas, cujos filetes somem em títulos
-  grandes em caixa alta.
-- **Layout editorial alternado**: os títulos de seção alternam de lado
-  (esquerda → direita → centro) via classes modificadoras no grid
-  (`.flip`, `.center`), marcando a fronteira entre seções sem divisores.
+- **Direção de arte de jornal**: papel `#f3f2ee`, tinta `#1b1b1b` e fios
+  finos, sem cor de destaque. A personalidade vem da tipografia e da
+  grade de colunas; as ilustrações dos projetos ficam em preto e branco,
+  como impressas, e ganham cor ao passar o mouse.
+- **Cidade em movimento no cabeçalho**: cinco clipes em preto e branco
+  (comprimidos de 66 MB para 3,7 MB com FFmpeg) tocam em sequência com
+  troca suave entre dois `<video>`; pausam fora da tela e, com
+  `prefers-reduced-motion`, fica só o pôster.
+- **Rotação dos projetos (classe `ProjectRotator`)**: animação FLIP com a
+  Web Animations API. Cada projeto desliza em arco até a nova posição,
+  formando um ciclo; botões Anterior/Próximo giram nos dois sentidos.
+  A rotação automática (7 s) pausa pelo botão (WCAG 2.2.2), com foco de
+  teclado e fora da tela, e fica desligada no celular.
+- **Horizonte de Brasília em SVG no rodapé**: traço fino do Congresso
+  Nacional e da Torre de TV que se desenha quando entra na tela.
+- **Navegação sem menu hambúrguer**: no celular, a faixa de seções rola
+  na horizontal, mantendo todos os links visíveis.
 - **Assets em kebab-case**: nomes de arquivo sem espaços ou caracteres
   especiais, evitando URLs com `%20` e erros 404 em produção.
 

@@ -164,17 +164,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ------------------------------------------------------------------
-  // HORIZONTE DE BRASÍLIA NO RODAPÉ: desenha quando entra na tela
+  // HORIZONTE DE BRASÍLIA NO RODAPÉ
+  // Cada vez que o rodapé entra na tela, sorteia uma de 4 animações
+  // (sem repetir a anterior). Quando sai totalmente, volta a esconder
+  // para a próxima visita aparecer de outro jeito.
   // ------------------------------------------------------------------
   const skyline = document.getElementById("skyline");
-  if (skyline) {
-    const skylineObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        skyline.classList.add("is-visible");
-        skylineObserver.disconnect();
-      }
-    }, { threshold: 0.5 });
-    skylineObserver.observe(skyline);
+  if (skyline && !reducedMotion.matches) {
+    const animations = ["draw", "rise", "pen", "lights"];
+    const parts = Array.from(skyline.children);
+    let last = null;
+
+    // --i: ordem da esquerda para a direita (o chão vem primeiro)
+    parts
+      .map((el) => ({ el, x: el.getBBox().x }))
+      .sort((p, q) => p.x - q.x)
+      .forEach(({ el }, i) => el.style.setProperty("--i", i));
+
+    const play = () => {
+      const options = animations.filter((name) => name !== last);
+      last = options[Math.floor(Math.random() * options.length)];
+      // --r: atraso aleatório, usado pela animação "luzes"
+      parts.forEach((el) => el.style.setProperty("--r", Math.random().toFixed(2)));
+      skyline.dataset.anim = last;
+    };
+
+    new IntersectionObserver(
+      ([entry]) => {
+        if (entry.intersectionRatio >= 0.6 && !skyline.dataset.anim) play();
+        else if (!entry.isIntersecting) delete skyline.dataset.anim;
+      },
+      { threshold: [0, 0.6] }
+    ).observe(skyline);
   }
 });
 
