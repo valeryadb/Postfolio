@@ -168,6 +168,179 @@ document.addEventListener("DOMContentLoaded", () => {
   // (sem repetir a anterior). Quando sai totalmente, volta a esconder
   // para a próxima visita aparecer de outro jeito.
   // ------------------------------------------------------------------
+  // ------------------------------------------------------------------
+  // TEXTO QUE APARECE COM A ROLAGEM
+  // Cada elemento marcado ganha [data-reveal]; quando entra na tela, a
+  // classe .is-visible dispara a transição (CSS). Dentro de um grupo,
+  // --d escalona os itens. Com movimento reduzido, nada é marcado e o
+  // conteúdo fica visível desde o início — o CSS só esconde [data-reveal].
+  // ------------------------------------------------------------------
+  if (!reducedMotion.matches && "IntersectionObserver" in window) {
+    // O HERO fica de fora de propósito: a primeira dobra aparece pronta
+    // (decisão da editora). A animação começa nas seções seguintes,
+    // conforme a rolagem.
+    const singles = document.querySelectorAll(
+      ".section-head, .career-lede, .portrait, .profile-text, .pullquote, " +
+        ".career-group, .certificates, .classifieds > *"
+    );
+    const staggered = document.querySelectorAll(
+      ".skills-col li, .certs-strip li, .school-certs li, .school-certs .certs-cards-grid li"
+    );
+
+    singles.forEach((el) => el.setAttribute("data-reveal", ""));
+    staggered.forEach((el) => {
+      el.setAttribute("data-reveal", "");
+      // escalona dentro do próprio grupo (coluna ou grade)
+      const i = Array.from(el.parentElement.children).indexOf(el);
+      el.style.setProperty("--d", `${Math.min(i, 14) * 55}ms`);
+    });
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target); // aparece uma vez só
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px" }
+    );
+
+    // Os itens do hero ([data-hero]) ficam de fora: quem os revela é a
+    // rolagem (showHero), não o observer — senão apareceriam no load.
+    document
+      .querySelectorAll("[data-reveal]:not([data-hero])")
+      .forEach((el) => revealObserver.observe(el));
+  }
+
+  // ------------------------------------------------------------------
+  // CERTIFICADOS: miniatura -> documento ampliado no <dialog>
+  // ------------------------------------------------------------------
+  const certDialog = document.getElementById("certDialog");
+
+  if (certDialog && typeof certDialog.showModal === "function") {
+    const certImage = document.getElementById("certImage");
+    const certCaption = document.getElementById("certCaption");
+
+    // Delegação no documento: vale para a fita da Carreira E para os
+    // registros de escola no Perfil — qualquer .cert abre o visor.
+    document.addEventListener("click", (event) => {
+      const btn = event.target.closest(".cert");
+      if (!btn || !btn.dataset.full) return;
+      // O botão pode ser a miniatura (tem <img>), o link "Ver certificado"
+      // ou o "+" de um registro — a legenda vem do que existir por perto.
+      const item = btn.closest("li");
+      const titulo = item?.querySelector("h4, .record-title")?.textContent.trim();
+      const meta = item?.querySelector(".cert-meta, .record-org")?.textContent.trim();
+      certImage.src = btn.dataset.full;
+      certImage.alt =
+        btn.querySelector("img")?.alt ||
+        btn.getAttribute("aria-label") ||
+        titulo ||
+        "Certificado ampliado";
+      certCaption.textContent =
+        [titulo, meta].filter(Boolean).join(" — ") || certImage.alt;
+      certDialog.showModal();
+    });
+
+    document.getElementById("certClose").addEventListener("click", () => certDialog.close());
+    // clique no fundo escurecido fecha (o conteúdo não ocupa o dialog todo)
+    certDialog.addEventListener("click", (event) => {
+      if (event.target === certDialog) certDialog.close();
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // FITA DE CERTIFICADOS: setas andam uma "página" de cards por clique,
+  // na mesma mecânica de navegação dos projetos.
+  // ------------------------------------------------------------------
+  const certsStrip = document.getElementById("certsGrid");
+  const certsPrev = document.getElementById("certsPrev");
+  const certsNext = document.getElementById("certsNext");
+
+  if (certsStrip && certsPrev && certsNext) {
+    const page = () => Math.max(certsStrip.clientWidth * 0.9, 220);
+    certsPrev.addEventListener("click", () =>
+      certsStrip.scrollBy({ left: -page(), behavior: reducedMotion.matches ? "auto" : "smooth" })
+    );
+    certsNext.addEventListener("click", () =>
+      certsStrip.scrollBy({ left: page(), behavior: reducedMotion.matches ? "auto" : "smooth" })
+    );
+
+    // Pontos de página (como no exemplo de referência): um ponto por
+    // "tela" de cards; o ativo acompanha a rolagem.
+    const dots = document.getElementById("certsDots");
+    if (dots) {
+      const pageCount = () =>
+        Math.max(1, Math.ceil(certsStrip.scrollWidth / certsStrip.clientWidth));
+      const current = () =>
+        Math.min(
+          pageCount() - 1,
+          Math.round(certsStrip.scrollLeft / certsStrip.clientWidth)
+        );
+
+      const renderDots = () => {
+        const n = pageCount();
+        dots.innerHTML = "";
+        for (let i = 0; i < n; i++) {
+          const d = document.createElement("span");
+          d.className = "dot" + (i === current() ? " active" : "");
+          dots.appendChild(d);
+        }
+      };
+
+      let raf = null;
+      certsStrip.addEventListener(
+        "scroll",
+        () => {
+          if (raf) return;
+          raf = requestAnimationFrame(() => {
+            raf = null;
+            const n = current();
+            dots.querySelectorAll(".dot").forEach((d, i) =>
+              d.classList.toggle("active", i === n)
+            );
+          });
+        },
+        { passive: true }
+      );
+      window.addEventListener("resize", renderDots);
+      renderDots();
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // FORMULÁRIO "CONTE SOBRE O SEU PROJETO"
+  // Sem servidor: a mensagem sai montada pelo WhatsApp ou pelo e-mail,
+  // conforme o botão que enviou o formulário (event.submitter).
+  // ------------------------------------------------------------------
+  const projectForm = document.getElementById("projectForm");
+  if (projectForm) {
+    projectForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const nome = document.getElementById("pfNome").value.trim();
+      const sobre = document.getElementById("pfMsg").value.trim();
+      if (!nome || !sobre) return;
+
+      const texto = `Olá, Valérya! Aqui é ${nome}. Sobre o meu projeto: ${sobre}`;
+      const canal = event.submitter?.dataset.canal || "whatsapp";
+
+      if (canal === "email") {
+        const assunto = `Projeto — ${nome}`;
+        window.location.href =
+          `mailto:valeryadev@gmail.com?subject=${encodeURIComponent(assunto)}` +
+          `&body=${encodeURIComponent(texto)}`;
+      } else {
+        window.open(
+          `https://wa.me/5561981715225?text=${encodeURIComponent(texto)}`,
+          "_blank",
+          "noopener"
+        );
+      }
+    });
+  }
+
   const skyline = document.getElementById("skyline");
   if (skyline && !reducedMotion.matches) {
     const animations = ["draw", "rise", "pen", "lights"];

@@ -514,6 +514,41 @@ img {
   display: none;
 }
 
+/* Setas laterais (projetos e certificados): ancoradas NA BORDA do
+   conteúdo, meio sobrepostas a ele — nunca fora da tela, em nenhuma
+   largura. Fundo de papel para destacar sobre as ilustrações. */
+.side-arrow {
+  position: absolute;
+  top: clamp(90px, 11vw, 160px);
+  z-index: 3;
+  background: var(--paper);
+}
+
+.side-arrow-prev {
+  left: -0.65rem;
+}
+
+.side-arrow-next {
+  right: -0.65rem;
+}
+
+/* =========================================================
+   TEXTO QUE APARECE COM A ROLAGEM
+   O main.js marca os elementos com [data-reveal] (nunca com
+   movimento reduzido); sem JS, nada é marcado e tudo aparece.
+========================================================= */
+[data-reveal] {
+  opacity: 0;
+  translate: 0 20px;
+  transition: opacity 0.7s var(--ease) var(--d, 0ms),
+    translate 0.7s var(--ease) var(--d, 0ms);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -526,45 +561,11 @@ img {
 /* ---------- PROJETOS ---------- */
 /* A rotação (classe ProjectRotator no main.js) anima cada projeto da
    posição antiga até a nova em arco. Origem no canto superior esquerdo
-   para a escala acompanhar a translação. */
-/* Setas nas laterais dos projetos, na altura das ilustrações.
-   Em telas sem espaço lateral, descem para baixo da lista. */
+   para a escala acompanhar a translação. As setas vivem no cabeçalho
+   da seção (.stage-controls), como paginação de caderno — sem setas
+   soltas flutuando fora da mancha de texto. */
 .projects-stage {
   position: relative;
-}
-
-.projects-arrow {
-  position: absolute;
-  top: clamp(110px, 12vw, 180px);
-  z-index: 3;
-  background: var(--paper);
-}
-
-.projects-arrow-prev {
-  left: -3.4rem;
-}
-
-.projects-arrow-next {
-  right: -3.4rem;
-}
-
-@media (max-width: 1280px) {
-  .projects-stage {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.6rem;
-  }
-
-  .projects-stage > .projects {
-    order: -1;
-    flex-basis: 100%;
-    margin-bottom: 1.25rem;
-  }
-
-  .projects-arrow {
-    position: static;
-  }
 }
 
 .projects {
@@ -660,17 +661,44 @@ body.dark-mode .photo img {
 }
 
 /* ---------- PERFIL ---------- */
+/* Três colunas de matéria de perfil: retrato | texto | olho (citação) */
 .profile {
   display: grid;
-  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  grid-template-columns: minmax(0, 3.5fr) minmax(0, 5.5fr) minmax(0, 3fr);
   gap: var(--col-gap);
   align-items: start;
 }
 
+.portrait {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.6rem;
+}
+
+/* Retrato em CORES: num jornal todo P&B, a foto da autora em cor é o
+   ponto de vida da página (e ninguém vira memória em vida). */
+.portrait img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.portrait figcaption {
+  margin-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--graphite);
+}
+
 .profile-text {
-  columns: 2;
   column-gap: var(--col-gap);
   column-rule: 1px solid var(--rule);
+}
+
+/* Texto de matéria: justificado com hifenização, como coluna de jornal */
+.profile-text p {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .profile-text p {
@@ -710,6 +738,16 @@ body.dark-mode .photo img {
 }
 
 /* ---------- CARREIRA ---------- */
+/* Linha fina (lede) sob o título: o destaque pedido para a seção */
+.career-lede {
+  max-width: 44em;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  font-size: clamp(1.15rem, 1.7vw, 1.3rem);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--graphite);
+}
+
 .career {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -760,12 +798,339 @@ body.dark-mode .photo img {
   white-space: nowrap;
 }
 
+/* ---------- CERTIFICADOS (dentro de Carreira) ---------- */
+.certificates {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.certificates h3 {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--ink);
+}
+
+.certs-note {
+  margin-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--graphite);
+}
+
+.certs-grid {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 1.25rem var(--col-gap);
+}
+
+/* ---------- CARTÕES DE CERTIFICADO (estilo estante) ---------- */
+.cert-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 1rem;
+}
+
+.cert-card h4 {
+  font-size: 1.15rem;
+  line-height: 1.25;
+  margin-top: 0.4rem;
+}
+
+.cert-desc {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--graphite);
+  flex-grow: 1;
+}
+
+.cert-meta {
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  color: var(--graphite);
+  border-top: 1px solid var(--rule);
+  padding-top: 0.55rem;
+}
+
+.cert-link {
+  align-self: flex-start;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.cert-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Grade de cartões (registros de escola, no Perfil) */
+.school-certs {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.certs-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: var(--col-gap);
+}
+
+/* Pontos de página do carrossel */
+.certs-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.certs-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+  background: transparent;
+  transition: background 0.3s var(--ease);
+}
+
+.certs-dots .dot.active {
+  background: var(--ink);
+}
+
+/* Botão "+" nos registros com certificado */
+.record li {
+  position: relative;
+}
+
+/* Seletor com li no meio de propósito: o botão também carrega a classe
+   .cert (para o visor), cuja regra genérica define width:100% e border:0
+   — aqui precisamos vencer essa regra na cascata. */
+.record li .record-plus {
+  position: absolute;
+  right: 0;
+  bottom: 0.55rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+
+.record li .record-plus:hover,
+.record li .record-plus:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  transform: rotate(90deg);
+}
+
+/* Fita horizontal de certificados (Carreira): rolagem com snap e setas,
+   na mesma mecânica de navegação dos projetos */
+.certs-carousel {
+  position: relative;
+  margin-top: 1.25rem;
+}
+
+.certs-strip {
+  display: flex;
+  gap: var(--col-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 0.25rem;
+}
+
+.certs-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.certs-strip li {
+  flex: 0 0 clamp(250px, 31%, 320px);
+  scroll-snap-align: start;
+}
+
+.certs-strip .cert {
+  width: 100%;
+}
+
+.certs-carousel .side-arrow {
+  top: 34%;
+}
+
+.cert {
+  display: block;
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: zoom-in;
+}
+
+.cert img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  filter: grayscale(1) contrast(1.02);
+  transition: filter 0.4s var(--ease);
+}
+
+.cert:hover img,
+.cert:focus-visible img {
+  filter: none;
+}
+
+/* Na edição noturna o papel dos documentos brilha menos */
+body.dark-mode .cert img {
+  filter: grayscale(1) brightness(0.88);
+}
+
+body.dark-mode .cert:hover img,
+body.dark-mode .cert:focus-visible img {
+  filter: brightness(0.95);
+}
+
+.cert span {
+  display: block;
+  margin-top: 0.45rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--graphite);
+}
+
+/* Visor do certificado ampliado */
+.cert-dialog {
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  padding: 1rem;
+  max-width: min(920px, 92vw);
+}
+
+.cert-dialog::backdrop {
+  background: rgba(10, 10, 10, 0.72);
+}
+
+.cert-dialog img {
+  width: 100%;
+  max-height: 74vh;
+  object-fit: contain;
+}
+
+.cert-dialog p {
+  margin-top: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--graphite);
+}
+
+.cert-close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.7rem;
+  background: none;
+  border: 0;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--graphite);
+  cursor: pointer;
+}
+
+.cert-close:hover {
+  color: var(--ink);
+}
+
+/* ---------- COMPETÊNCIAS: LISTA OCULTA ---------- */
+/* <details> estilo jornal: um fio com "Ver competências" e o sinal +,
+   que gira ao abrir; o conteúdo entra com os itens escalonados. */
+.skills-details {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.skills-details summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1.1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.skills-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.skills-details summary::after {
+  content: "+";
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1;
+  transition: transform 0.4s var(--ease);
+}
+
+.skills-details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.skills-details .skills {
+  padding: 0.5rem 0 1.75rem;
+}
+
 /* ---------- COMPETÊNCIAS ---------- */
+/* Dois cadernos lado a lado, com fio vertical separando técnicas de
+   comportamentais — e etiquetas tipo chumbo nos títulos. */
 .skills {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--col-gap);
   align-items: start;
+}
+
+.skills-col + .skills-col {
+  border-left: 1px solid var(--rule);
+  padding-left: var(--col-gap);
+}
+
+.skills-col h3 {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.35rem 0.8rem;
+  border-bottom: 0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  margin-bottom: 0.9rem;
 }
 
 .skills-col ul {
@@ -773,15 +1138,20 @@ body.dark-mode .photo img {
   column-gap: var(--col-gap);
 }
 
-.skills-col:last-child ul {
-  columns: 1;
-}
-
 .skills-col li {
   break-inside: avoid;
-  padding: 0.55rem 0;
+  padding: 0.55rem 0 0.55rem 1.5rem;
   border-bottom: 1px solid var(--rule);
   line-height: 1.4;
+  position: relative;
+}
+
+/* marcador tipográfico, em vez de lista pelada */
+.skills-col li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--graphite);
 }
 
 /* ---------- CLASSIFICADOS ---------- */
@@ -869,6 +1239,57 @@ body.dark-mode .photo img {
 a.ad:hover h3 {
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+/* Anúncio-resposta: formulário "conte sobre o seu projeto" */
+.ad-form {
+  grid-column: 1 / -1;
+}
+
+.ad-form form {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 1rem var(--col-gap);
+  align-items: start;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-row label {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--graphite);
+}
+
+.form-row input,
+.form-row textarea {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--graphite);
+  padding: 0.65rem 0.8rem;
+  width: 100%;
+  resize: vertical;
+}
+
+.form-row input:focus-visible,
+.form-row textarea:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 /* =========================================================
@@ -991,6 +1412,14 @@ a.ad:hover h3 {
     grid-template-columns: 1fr;
   }
 
+  /* em coluna única, o fio separador vira horizontal */
+  .skills-col + .skills-col {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.25rem;
+  }
+
   .index-box {
     border-left: 0;
     padding-left: 0;
@@ -1068,6 +1497,24 @@ a.ad:hover h3 {
 
   .ad-main {
     grid-row: auto;
+  }
+
+  .ad-form form {
+    grid-template-columns: 1fr;
+  }
+
+  .portrait {
+    max-width: 420px;
+  }
+
+  .certs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  /* Na fita, cada card ocupa boa parte da tela — rolagem card a card */
+  .certs-strip li {
+    flex-basis: 74%;
   }
 
   .profile-text,
