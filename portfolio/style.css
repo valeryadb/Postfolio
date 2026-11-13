@@ -1,9 +1,3 @@
-/* =========================================================
-   PORTFÓLIO EM FORMATO DE JORNAL
-   Papel, tinta e fio: sem cor de destaque. A personalidade vem
-   da tipografia (Newsreader no nome e no texto, Libre
-   Franklin no apoio) e da grade de colunas.
-========================================================= */
 :root {
   --paper: #f3f2ee;      /* papel jornal, levemente acinzentado */
   --ink: #1b1b1b;        /* tinta */
@@ -1023,11 +1017,15 @@ body.dark-mode .cert:focus-visible img {
 
 /* Visor do certificado ampliado */
 .cert-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
   border: 1px solid var(--ink);
   background: var(--paper);
   color: var(--ink);
   padding: 1rem;
   max-width: min(920px, 92vw);
+  max-height: 92vh;
 }
 
 .cert-dialog::backdrop {
