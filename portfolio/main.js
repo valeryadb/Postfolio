@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ------------------------------------------------------------------
-  // DATA DO DIA NO CABEÇALHO (como a linha de data de um jornal)
-  // O HTML já traz "Brasília, DF" como texto de reserva.
-  // ------------------------------------------------------------------
+  // Data atual no cabeçalho e ano no rodapé
   const dateline = document.getElementById("dateline");
   const year = document.getElementById("year");
   const today = new Date();
@@ -19,13 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (year) year.textContent = String(today.getFullYear());
 
-  // ------------------------------------------------------------------
-  // TEMA (CLARO / EDIÇÃO NOTURNA)
-  // A classe já foi aplicada pelo script inline no topo do <body>
-  // (antes da primeira pintura, evitando o "flash" do tema errado).
-  // localStorage sempre em try/catch: em navegação privada ou com
-  // cookies bloqueados, o acesso pode lançar exceção.
-  // ------------------------------------------------------------------
+  // Alternância de tema (claro / escuro)
   const themeToggle = document.getElementById("themeToggle");
   const themeColor = document.querySelector('meta[name="theme-color"]');
 
@@ -51,9 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     syncThemeButton(isDark);
   });
 
-  // ------------------------------------------------------------------
-  // BOTÃO FLUTUANTE DE WHATSAPP (APARECE APÓS 20 SEGUNDOS)
-  // ------------------------------------------------------------------
+  // Botão flutuante de WhatsApp (exibido após 20s)
   const messageText = encodeURIComponent(
     "Olá Valérya, vi seu portfólio e gostaria de tirar algumas dúvidas!"
   );
@@ -90,13 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  // ------------------------------------------------------------------
-  // FAIXA DE VÍDEO DA CIDADE
-  // Dois <video> empilhados: enquanto um toca, o outro já carrega o
-  // próximo clipe; ao terminar, os dois trocam com um fade.
-  // Pausa quando a faixa sai da tela ou a aba fica oculta.
-  // Com movimento reduzido, fica só o pôster.
-  // ------------------------------------------------------------------
+  // Faixa de vídeo da cidade (crossfade entre 2 players)
   const clips = [1, 2, 3, 4, 5].map((n) => `assets/video/cidade-${n}.mp4`);
   const band = document.querySelector(".city-band");
   const videos = Array.from(document.querySelectorAll(".city-video"));
@@ -132,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
         videos[active].classList.add("is-active");
         previous.classList.remove("is-active");
         playActive();
-        // Depois do fade, o vídeo que saiu carrega o clipe seguinte
         setTimeout(() => load(previous, (clip + 1) % clips.length), 1300);
       });
     });
@@ -149,9 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ------------------------------------------------------------------
-  // ROTAÇÃO DOS PROJETOS (classe ProjectRotator, no fim do arquivo)
-  // ------------------------------------------------------------------
+  // Rotação cíclica dos projetos
   const projectsList = document.getElementById("projectsList");
   if (projectsList) {
     new ProjectRotator(projectsList, {
@@ -162,23 +142,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ------------------------------------------------------------------
-  // HORIZONTE DE BRASÍLIA NO RODAPÉ
-  // Cada vez que o rodapé entra na tela, sorteia uma de 4 animações
-  // (sem repetir a anterior). Quando sai totalmente, volta a esconder
-  // para a próxima visita aparecer de outro jeito.
-  // ------------------------------------------------------------------
-  // ------------------------------------------------------------------
-  // TEXTO QUE APARECE COM A ROLAGEM
-  // Cada elemento marcado ganha [data-reveal]; quando entra na tela, a
-  // classe .is-visible dispara a transição (CSS). Dentro de um grupo,
-  // --d escalona os itens. Com movimento reduzido, nada é marcado e o
-  // conteúdo fica visível desde o início — o CSS só esconde [data-reveal].
-  // ------------------------------------------------------------------
+  // Animação de entrada dos elementos na rolagem
   if (!reducedMotion.matches && "IntersectionObserver" in window) {
-    // O HERO fica de fora de propósito: a primeira dobra aparece pronta
-    // (decisão da editora). A animação começa nas seções seguintes,
-    // conforme a rolagem.
     const singles = document.querySelectorAll(
       ".section-head, .career-lede, .portrait, .profile-text, .pullquote, " +
         ".career-group, .certificates, .classifieds > *"
@@ -190,7 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
     singles.forEach((el) => el.setAttribute("data-reveal", ""));
     staggered.forEach((el) => {
       el.setAttribute("data-reveal", "");
-      // escalona dentro do próprio grupo (coluna ou grade)
       const i = Array.from(el.parentElement.children).indexOf(el);
       el.style.setProperty("--d", `${Math.min(i, 14) * 55}ms`);
     });
@@ -200,36 +164,29 @@ document.addEventListener("DOMContentLoaded", () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
-            revealObserver.unobserve(entry.target); // aparece uma vez só
+            revealObserver.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.12, rootMargin: "0px 0px -40px" }
     );
 
-    // Os itens do hero ([data-hero]) ficam de fora: quem os revela é a
-    // rolagem (showHero), não o observer — senão apareceriam no load.
     document
       .querySelectorAll("[data-reveal]:not([data-hero])")
       .forEach((el) => revealObserver.observe(el));
   }
 
-  // ------------------------------------------------------------------
-  // CERTIFICADOS: miniatura -> documento ampliado no <dialog>
-  // ------------------------------------------------------------------
+  // Modal de visualização de certificados
   const certDialog = document.getElementById("certDialog");
 
   if (certDialog && typeof certDialog.showModal === "function") {
     const certImage = document.getElementById("certImage");
     const certCaption = document.getElementById("certCaption");
 
-    // Delegação no documento: vale para a fita da Carreira E para os
-    // registros de escola no Perfil — qualquer .cert abre o visor.
     document.addEventListener("click", (event) => {
       const btn = event.target.closest(".cert");
       if (!btn || !btn.dataset.full) return;
-      // O botão pode ser a miniatura (tem <img>), o link "Ver certificado"
-      // ou o "+" de um registro — a legenda vem do que existir por perto.
+
       const item = btn.closest("li");
       const titulo = item?.querySelector("h4, .record-title")?.textContent.trim();
       const meta = item?.querySelector(".cert-meta, .record-org")?.textContent.trim();
@@ -245,31 +202,72 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("certClose").addEventListener("click", () => certDialog.close());
-    // clique no fundo escurecido fecha (o conteúdo não ocupa o dialog todo)
     certDialog.addEventListener("click", (event) => {
       if (event.target === certDialog) certDialog.close();
     });
   }
 
-  // ------------------------------------------------------------------
-  // FITA DE CERTIFICADOS: setas andam uma "página" de cards por clique,
-  // na mesma mecânica de navegação dos projetos.
-  // ------------------------------------------------------------------
+ // Carrossel horizontal de certificados (setas e paginação)
   const certsStrip = document.getElementById("certsGrid");
   const certsPrev = document.getElementById("certsPrev");
   const certsNext = document.getElementById("certsNext");
 
   if (certsStrip && certsPrev && certsNext) {
-    const page = () => Math.max(certsStrip.clientWidth * 0.9, 220);
-    certsPrev.addEventListener("click", () =>
-      certsStrip.scrollBy({ left: -page(), behavior: reducedMotion.matches ? "auto" : "smooth" })
-    );
-    certsNext.addEventListener("click", () =>
-      certsStrip.scrollBy({ left: page(), behavior: reducedMotion.matches ? "auto" : "smooth" })
-    );
+    let scrollAnimId = null;
 
-    // Pontos de página (como no exemplo de referência): um ponto por
-    // "tela" de cards; o ativo acompanha a rolagem.
+    const getStep = () => {
+      const firstCard = certsStrip.querySelector(".cert-card");
+      if (!firstCard) return 280;
+      const gap = parseFloat(getComputedStyle(certsStrip).columnGap || getComputedStyle(certsStrip).gap) || 0;
+      return firstCard.getBoundingClientRect().width + gap;
+    };
+
+    const smoothScrollTo = (targetLeft, duration = 550) => {
+      if (reducedMotion.matches) {
+        certsStrip.scrollLeft = targetLeft;
+        return;
+      }
+
+      if (scrollAnimId) cancelAnimationFrame(scrollAnimId);
+
+      const startLeft = certsStrip.scrollLeft;
+      const maxScroll = certsStrip.scrollWidth - certsStrip.clientWidth;
+      const clampedTarget = Math.max(0, Math.min(targetLeft, maxScroll));
+      const distance = clampedTarget - startLeft;
+      if (Math.abs(distance) < 1) return;
+
+      let startTime = null;
+      const easeInOutCubic = (t) =>
+        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+      const animate = (now) => {
+        if (!startTime) startTime = now;
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        certsStrip.scrollLeft = startLeft + distance * easeInOutCubic(progress);
+
+        if (progress < 1) {
+          scrollAnimId = requestAnimationFrame(animate);
+        } else {
+          scrollAnimId = null;
+        }
+      };
+
+      scrollAnimId = requestAnimationFrame(animate);
+    };
+
+    certsPrev.addEventListener("click", () => {
+      const step = getStep();
+      const targetIndex = Math.max(0, Math.round(certsStrip.scrollLeft / step) - 1);
+      smoothScrollTo(targetIndex * step);
+    });
+
+    certsNext.addEventListener("click", () => {
+      const step = getStep();
+      const targetIndex = Math.round(certsStrip.scrollLeft / step) + 1;
+      smoothScrollTo(targetIndex * step);
+    });
+
     const dots = document.getElementById("certsDots");
     if (dots) {
       const pageCount = () =>
@@ -310,11 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ------------------------------------------------------------------
-  // FORMULÁRIO "CONTE SOBRE O SEU PROJETO"
-  // Sem servidor: a mensagem sai montada pelo WhatsApp ou pelo e-mail,
-  // conforme o botão que enviou o formulário (event.submitter).
-  // ------------------------------------------------------------------
+  // Formulário "Conte sobre o seu projeto" (redireciona para WhatsApp ou e-mail)
   const projectForm = document.getElementById("projectForm");
   if (projectForm) {
     projectForm.addEventListener("submit", (event) => {
@@ -341,13 +335,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Animação do horizonte de Brasília no rodapé
   const skyline = document.getElementById("skyline");
   if (skyline && !reducedMotion.matches) {
     const animations = ["draw", "rise", "pen", "lights"];
     const parts = Array.from(skyline.children);
     let last = null;
 
-    // --i: ordem da esquerda para a direita (o chão vem primeiro)
     parts
       .map((el) => ({ el, x: el.getBBox().x }))
       .sort((p, q) => p.x - q.x)
@@ -356,7 +350,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const play = () => {
       const options = animations.filter((name) => name !== last);
       last = options[Math.floor(Math.random() * options.length)];
-      // --r: atraso aleatório, usado pela animação "luzes"
       parts.forEach((el) => el.style.setProperty("--r", Math.random().toFixed(2)));
       skyline.dataset.anim = last;
     };
@@ -371,26 +364,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* ====================================================================
-   ProjectRotator
-   Gira os projetos em ciclo: o destaque (1º da lista) vai para o fim e
-   o próximo assume. "Anterior" gira no sentido contrário.
-
-   Animação FLIP com a Web Animations API:
-   - First: mede a posição de cada projeto antes da troca;
-   - Last: troca a ordem no DOM e mede de novo;
-   - Invert + Play: cada projeto começa visualmente onde estava e
-     desliza até o lugar novo. O quadro do meio é empurrado para fora
-     da reta, então o caminho vira um arco e os três juntos desenham o
-     ciclo do rascunho (sentido anti-horário no "Próximo").
-
-   Rotação automática a cada 7 s, pausada ao focar um projeto pelo
-   teclado, fora da tela, com a aba oculta e no celular. Com movimento reduzido, a troca é instantânea.
-==================================================================== */
+// Classe responsável pela rotação cíclica e animação FLIP dos projetos
 class ProjectRotator {
   static INTERVAL = 7000;
   static DURATION = 900;
-  static ARC = 0.16; // quanto o caminho se curva (fração da distância)
+  static ARC = 0.16;
 
   constructor(list, { prevButton, nextButton, toggleButton, status, reducedMotion }) {
     this.list = list;
@@ -455,12 +433,11 @@ class ProjectRotator {
 
   syncToggle() {
     if (!this.toggleButton) return;
-    this.toggleButton.hidden = this.narrow.matches; // no celular não há rotação automática
+    this.toggleButton.hidden = this.narrow.matches;
     this.toggleButton.setAttribute("aria-pressed", String(this.paused));
     this.toggleButton.textContent = this.paused ? "Retomar" : "Pausar";
   }
 
-  // direction: 1 = próximo, -1 = anterior
   step(direction, byUser = false) {
     const items = Array.from(this.list.children);
     items.forEach((el) => el.getAnimations().forEach((anim) => anim.finish()));
@@ -472,7 +449,7 @@ class ProjectRotator {
 
     if (byUser) {
       this.announce();
-      this.schedule(); // reinicia a contagem após um clique
+      this.schedule();
     }
 
     if (this.reducedMotion.matches) return;
@@ -487,15 +464,12 @@ class ProjectRotator {
     const scale = from.width / to.width;
     if (!dx && !dy && scale === 1) return;
 
-    // Vetor do movimento (centro antigo -> centro novo) e sua
-    // perpendicular: é para lá que o meio do caminho é empurrado.
     const mx = to.left + to.width / 2 - (from.left + from.width / 2);
     const my = to.top + to.height / 2 - (from.top + from.height / 2);
     const arcX = -my * ProjectRotator.ARC;
     let arcY = mx * ProjectRotator.ARC;
-    if (arcY < 0) arcY *= 0.25; // arco para cima fica contido: não invade o título
+    if (arcY < 0) arcY *= 0.25;
 
-    // quem vai virar destaque passa por cima dos outros
     el.style.zIndex = isNewLead ? "2" : "1";
 
     el.animate(

@@ -1,8 +1,8 @@
 :root {
-  --paper: #f3f2ee;      /* papel jornal, levemente acinzentado */
-  --ink: #1b1b1b;        /* tinta */
-  --graphite: #57554f;   /* texto de apoio: ~7:1 sobre o papel */
-  --rule: #c9c6be;       /* fios finos entre colunas e linhas */
+  --paper: #f3f2ee;
+  --ink: #1b1b1b;
+  --graphite: #57554f;
+  --rule: #c9c6be;
 
   --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
   --font-sans: "Libre Franklin", "Franklin Gothic Medium", Arial, sans-serif;
@@ -29,7 +29,7 @@ body.dark-mode {
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 64px; /* compensa a faixa de navegação fixa */
+  scroll-padding-top: 64px;
 }
 
 body {
@@ -84,7 +84,7 @@ img {
 }
 
 /* =========================================================
-   CABEÇALHO
+   CABEÇALHO & FAIXA DE VÍDEO
 ========================================================= */
 .masthead-bar {
   display: grid;
@@ -124,12 +124,11 @@ img {
   border-color: var(--ink);
 }
 
-/* Faixa de vídeo da cidade, de ponta a ponta da tela */
 .city-band {
   position: relative;
   height: clamp(150px, 17vw, 280px);
   overflow: hidden;
-  background: #3a3a3a; /* enquanto o pôster carrega */
+  background: #3a3a3a;
 }
 
 .city-video {
@@ -146,8 +145,6 @@ img {
   opacity: 1;
 }
 
-/* Sombra à direita: garante leitura do nome sobre qualquer clipe,
-   do céu claro de dia à avenida escura de noite */
 .city-band::after {
   content: "";
   position: absolute;
@@ -180,7 +177,7 @@ img {
   text-decoration: none;
   color: #ffffff;
   text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
-  margin-right: -0.28em; /* compensa o espaçamento após a última letra */
+  margin-right: -0.28em;
   margin-top: 2.5em;
 }
 
@@ -188,10 +185,9 @@ img {
   outline-color: #ffffff;
 }
 
-/* Horizonte de Brasília (rodapé). Cada vez que entra na tela, o
-   main.js sorteia uma de 4 animações em data-anim (sem repetir a
-   anterior). --i = ordem da esquerda para a direita; --r = atraso
-   aleatório. Sem JS, aparece já desenhado. */
+/* =========================================================
+   HORIZONTE DE BRASÍLIA (SVG DO RODAPÉ)
+========================================================= */
 .skyline {
   display: block;
   width: 100%;
@@ -209,34 +205,29 @@ img {
 .skyline > * {
   vector-effect: non-scaling-stroke;
   transform-box: fill-box;
-  transform-origin: 50% 100%; /* prédios crescem a partir do chão */
+  transform-origin: 50% 100%;
 }
 
-/* antes de tocar, fica escondido */
 .js .skyline:not([data-anim]) > * {
   opacity: 0;
 }
 
-/* 1. Traço: o contorno inteiro se desenha junto */
 .skyline[data-anim="draw"] > * {
   stroke-dasharray: 1;
   animation: sky-draw 1.8s var(--ease) both;
 }
 
-/* 2. Construção: os prédios sobem do chão, um depois do outro */
 .skyline[data-anim="rise"] > * {
   animation: sky-rise 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   animation-delay: calc(var(--i) * 70ms);
 }
 
-/* 3. Caneta: o traço percorre a cidade da esquerda para a direita */
 .skyline[data-anim="pen"] > * {
   stroke-dasharray: 1;
   animation: sky-draw 0.45s ease-in-out both;
   animation-delay: calc(var(--i) * 140ms);
 }
 
-/* 4. Luzes: os prédios piscam e acendem fora de ordem */
 .skyline[data-anim="lights"] > * {
   animation: sky-flicker 0.9s steps(1, end) both;
   animation-delay: calc(var(--r) * 1.4s);
@@ -275,7 +266,9 @@ img {
   100% { opacity: 1; }
 }
 
-/* Faixa de navegação: fio duplo de jornal, fixa no topo */
+/* =========================================================
+   NAVEGAÇÃO FIXA
+========================================================= */
 .sections-nav {
   position: sticky;
   top: 0;
@@ -315,7 +308,7 @@ img {
 }
 
 /* =========================================================
-   PRIMEIRA PÁGINA
+   PRIMEIRA PÁGINA & ÍNDICE
 ========================================================= */
 .front {
   display: grid;
@@ -392,7 +385,6 @@ img {
   text-underline-offset: 4px;
 }
 
-/* Índice "Nesta edição" */
 .index-box {
   border-left: 1px solid var(--rule);
   padding-left: var(--col-gap);
@@ -437,7 +429,7 @@ img {
 }
 
 /* =========================================================
-   SEÇÕES
+   SEÇÕES, CONTROLES & REVEAL
 ========================================================= */
 .section {
   padding-bottom: clamp(3.5rem, 8vw, 6rem);
@@ -486,7 +478,6 @@ img {
   border-color: var(--ink);
 }
 
-/* Setas: chevron fino com pontas arredondadas */
 .rotation-arrow {
   width: 2.1rem;
   height: 2.1rem;
@@ -508,9 +499,6 @@ img {
   display: none;
 }
 
-/* Setas laterais (projetos e certificados): ancoradas NA BORDA do
-   conteúdo, meio sobrepostas a ele — nunca fora da tela, em nenhuma
-   largura. Fundo de papel para destacar sobre as ilustrações. */
 .side-arrow {
   position: absolute;
   top: clamp(90px, 11vw, 160px);
@@ -526,11 +514,6 @@ img {
   right: -0.65rem;
 }
 
-/* =========================================================
-   TEXTO QUE APARECE COM A ROLAGEM
-   O main.js marca os elementos com [data-reveal] (nunca com
-   movimento reduzido); sem JS, nada é marcado e tudo aparece.
-========================================================= */
 [data-reveal] {
   opacity: 0;
   translate: 0 20px;
@@ -552,12 +535,9 @@ img {
   white-space: nowrap;
 }
 
-/* ---------- PROJETOS ---------- */
-/* A rotação (classe ProjectRotator no main.js) anima cada projeto da
-   posição antiga até a nova em arco. Origem no canto superior esquerdo
-   para a escala acompanhar a translação. As setas vivem no cabeçalho
-   da seção (.stage-controls), como paginação de caderno — sem setas
-   soltas flutuando fora da mancha de texto. */
+/* =========================================================
+   PROJETOS
+========================================================= */
 .projects-stage {
   position: relative;
 }
@@ -572,11 +552,6 @@ img {
 .story {
   transform-origin: top left;
   will-change: transform;
-}
-
-/* Fundo de papel: a animação isola cada projeto numa camada, então a
-   mistura da ilustração precisa de um fundo dentro do próprio bloco */
-.story {
   background: var(--paper);
 }
 
@@ -603,11 +578,10 @@ img {
   object-fit: cover;
   object-position: center;
   filter: grayscale(1) contrast(1.05);
-  mix-blend-mode: multiply; /* o branco da imagem vira papel, como impresso */
+  mix-blend-mode: multiply;
   transition: filter 0.4s var(--ease);
 }
 
-/* Edição noturna: a ilustração vira negativo e o fundo branco some */
 body.dark-mode .photo img {
   mix-blend-mode: screen;
   filter: grayscale(1) invert(1) contrast(0.9);
@@ -654,8 +628,9 @@ body.dark-mode .photo img {
   text-underline-offset: 4px;
 }
 
-/* ---------- PERFIL ---------- */
-/* Três colunas de matéria de perfil: retrato | texto | olho (citação) */
+/* =========================================================
+   PERFIL
+========================================================= */
 .profile {
   display: grid;
   grid-template-columns: minmax(0, 3.5fr) minmax(0, 5.5fr) minmax(0, 3fr);
@@ -668,8 +643,6 @@ body.dark-mode .photo img {
   padding-bottom: 0.6rem;
 }
 
-/* Retrato em CORES: num jornal todo P&B, a foto da autora em cor é o
-   ponto de vida da página (e ninguém vira memória em vida). */
 .portrait img {
   width: 100%;
   aspect-ratio: 3 / 4;
@@ -688,17 +661,12 @@ body.dark-mode .photo img {
   column-rule: 1px solid var(--rule);
 }
 
-/* Texto de matéria: justificado com hifenização, como coluna de jornal */
 .profile-text p {
   text-align: justify;
   hyphens: auto;
   -webkit-hyphens: auto;
-}
-
-.profile-text p {
   margin-bottom: 1em;
   line-height: 1.65;
-  hyphens: auto;
   break-inside: avoid-column;
 }
 
@@ -731,8 +699,9 @@ body.dark-mode .photo img {
   color: var(--graphite);
 }
 
-/* ---------- CARREIRA ---------- */
-/* Linha fina (lede) sob o título: o destaque pedido para a seção */
+/* =========================================================
+   CARREIRA & CERTIFICADOS
+========================================================= */
 .career-lede {
   max-width: 44em;
   margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
@@ -759,6 +728,7 @@ body.dark-mode .photo img {
 }
 
 .record li {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   column-gap: 1.5rem;
@@ -792,7 +762,6 @@ body.dark-mode .photo img {
   white-space: nowrap;
 }
 
-/* ---------- CERTIFICADOS (dentro de Carreira) ---------- */
 .certificates {
   margin-top: clamp(2rem, 4vw, 3rem);
 }
@@ -819,7 +788,6 @@ body.dark-mode .photo img {
   gap: 1.25rem var(--col-gap);
 }
 
-/* ---------- CARTÕES DE CERTIFICADO (estilo estante) ---------- */
 .cert-card {
   display: flex;
   flex-direction: column;
@@ -870,7 +838,6 @@ body.dark-mode .photo img {
   text-decoration-thickness: 2px;
 }
 
-/* Grade de cartões (registros de escola, no Perfil) */
 .school-certs {
   margin-top: clamp(2rem, 4vw, 3rem);
 }
@@ -881,7 +848,6 @@ body.dark-mode .photo img {
   gap: var(--col-gap);
 }
 
-/* Pontos de página do carrossel */
 .certs-dots {
   display: flex;
   justify-content: center;
@@ -902,14 +868,7 @@ body.dark-mode .photo img {
   background: var(--ink);
 }
 
-/* Botão "+" nos registros com certificado */
-.record li {
-  position: relative;
-}
-
-/* Seletor com li no meio de propósito: o botão também carrega a classe
-   .cert (para o visor), cuja regra genérica define width:100% e border:0
-   — aqui precisamos vencer essa regra na cascata. */
+/* Botão "+" nos registros com certificado (sobrepõe regra genérica de .cert) */
 .record li .record-plus {
   position: absolute;
   right: 0;
@@ -937,8 +896,6 @@ body.dark-mode .photo img {
   transform: rotate(90deg);
 }
 
-/* Fita horizontal de certificados (Carreira): rolagem com snap e setas,
-   na mesma mecânica de navegação dos projetos */
 .certs-carousel {
   position: relative;
   margin-top: 1.25rem;
@@ -948,7 +905,7 @@ body.dark-mode .photo img {
   display: flex;
   gap: var(--col-gap);
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   scrollbar-width: none;
   padding-bottom: 0.25rem;
 }
@@ -996,7 +953,6 @@ body.dark-mode .photo img {
   filter: none;
 }
 
-/* Na edição noturna o papel dos documentos brilha menos */
 body.dark-mode .cert img {
   filter: grayscale(1) brightness(0.88);
 }
@@ -1061,9 +1017,9 @@ body.dark-mode .cert:focus-visible img {
   color: var(--ink);
 }
 
-/* ---------- COMPETÊNCIAS: LISTA OCULTA ---------- */
-/* <details> estilo jornal: um fio com "Ver competências" e o sinal +,
-   que gira ao abrir; o conteúdo entra com os itens escalonados. */
+/* =========================================================
+   COMPETÊNCIAS
+========================================================= */
 .skills-details {
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
@@ -1104,9 +1060,6 @@ body.dark-mode .cert:focus-visible img {
   padding: 0.5rem 0 1.75rem;
 }
 
-/* ---------- COMPETÊNCIAS ---------- */
-/* Dois cadernos lado a lado, com fio vertical separando técnicas de
-   comportamentais — e etiquetas tipo chumbo nos títulos. */
 .skills {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1144,7 +1097,6 @@ body.dark-mode .cert:focus-visible img {
   position: relative;
 }
 
-/* marcador tipográfico, em vez de lista pelada */
 .skills-col li::before {
   content: "—";
   position: absolute;
@@ -1152,7 +1104,9 @@ body.dark-mode .cert:focus-visible img {
   color: var(--graphite);
 }
 
-/* ---------- CLASSIFICADOS ---------- */
+/* =========================================================
+   CONTATO & FORMULÁRIO
+========================================================= */
 .classifieds {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
@@ -1239,7 +1193,6 @@ a.ad:hover h3 {
   text-underline-offset: 4px;
 }
 
-/* Anúncio-resposta: formulário "conte sobre o seu projeto" */
 .ad-form {
   grid-column: 1 / -1;
 }
@@ -1291,7 +1244,7 @@ a.ad:hover h3 {
 }
 
 /* =========================================================
-   RODAPÉ
+   RODAPÉ & WHATSAPP FLUTUANTE
 ========================================================= */
 .colophon {
   border-top: 3px double var(--ink);
@@ -1302,10 +1255,6 @@ a.ad:hover h3 {
   color: var(--graphite);
 }
 
-
-/* =========================================================
-   BOTÃO FLUTUANTE DO WHATSAPP (APARECE APÓS 20 SEGUNDOS)
-========================================================= */
 .wa-float-container {
   position: fixed;
   bottom: 24px;
@@ -1410,7 +1359,6 @@ a.ad:hover h3 {
     grid-template-columns: 1fr;
   }
 
-  /* em coluna única, o fio separador vira horizontal */
   .skills-col + .skills-col {
     border-left: 0;
     padding-left: 0;
@@ -1466,12 +1414,10 @@ a.ad:hover h3 {
     display: none;
   }
 
-  /* no celular o nome ocupa quase toda a largura: sombra por igual */
   .city-band::after {
     background: rgba(0, 0, 0, 0.4);
   }
 
-  /* a faixa rola de lado; o esmaecido indica que há mais itens */
   .sections-nav ul {
     justify-content: flex-start;
     padding-right: 2rem;
@@ -1510,7 +1456,6 @@ a.ad:hover h3 {
     gap: 1rem;
   }
 
-  /* Na fita, cada card ocupa boa parte da tela — rolagem card a card */
   .certs-strip li {
     flex-basis: 74%;
   }

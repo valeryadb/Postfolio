@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Valérya Dias | Desenvolvedora de Software</title>
 
-    <!-- SEO & compartilhamento (LinkedIn/WhatsApp leem estas tags) -->
+    <!-- SEO & Open Graph -->
     <meta
       name="description"
       content="Portfólio de Valérya Dias, desenvolvedora de software focada em back-end, APIs RESTful, bancos de dados e soluções práticas. Node.js, TypeScript, Python e SQL."
@@ -21,13 +21,13 @@
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#F3F2EE" />
 
-    <!-- Favicon: "V" em serifa -->
+    <!-- Favicon -->
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231B1B1B'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' fill='%23F3F2EE' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E"
     />
 
-    <!-- Fontes: Newsreader (nome e texto); Libre Franklin (apoio) -->
+    <!-- Fontes & Ícones -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -43,7 +43,7 @@
     <script src="main.js" defer></script>
   </head>
   <body>
-    <!-- Aplica o tema salvo ANTES da primeira pintura da página -->
+    <!-- Aplica tema salvo antes da primeira pintura -->
     <script>
       document.documentElement.classList.add("js");
       try {
@@ -55,7 +55,7 @@
 
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-    <!-- CABEÇALHO DE JORNAL -->
+    <!-- CABEÇALHO -->
     <header class="masthead">
       <div class="container">
         <div class="masthead-bar">
@@ -72,12 +72,9 @@
             <span class="theme-toggle-text">Edição noturna</span>
           </button>
         </div>
-
       </div>
 
-      <!-- Faixa de vídeo: a cidade em movimento, em preto e branco.
-           Os clipes entram em sequência pelo main.js; com movimento
-           reduzido, fica só o pôster (primeiro quadro). -->
+      <!-- Faixa de vídeo da cidade -->
       <div class="city-band">
         <video
           class="city-video is-active"
@@ -101,16 +98,16 @@
     </header>
 
     <nav class="sections-nav" aria-label="Seções">
-        <div class="container">
-          <ul>
-            <li><a href="#projetos">Projetos</a></li>
-            <li><a href="#sobre">Perfil</a></li>
-            <li><a href="#experiencia">Carreira</a></li>
-            <li><a href="#competencias">Competências</a></li>
-            <li><a href="#contato">Contato</a></li>
-          </ul>
-        </div>
-      </nav>
+      <div class="container">
+        <ul>
+          <li><a href="#projetos">Projetos</a></li>
+          <li><a href="#sobre">Perfil</a></li>
+          <li><a href="#experiencia">Carreira</a></li>
+          <li><a href="#competencias">Competências</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+    </nav>
 
     <main id="conteudo">
       <!-- PRIMEIRA PÁGINA -->
@@ -176,9 +173,7 @@
         </header>
         <p class="visually-hidden" id="projectsStatus" aria-live="polite"></p>
 
-        <!-- Os projetos se revezam: o primeiro da lista vira destaque.
-             Setas nas laterais, ancoradas na borda do conteúdo (nunca
-             fora da tela). -->
+        <!-- Carrossel cíclico de projetos -->
         <div class="projects-stage">
           <button
             class="rotation-btn rotation-arrow side-arrow side-arrow-prev"
@@ -316,7 +311,7 @@
           </blockquote>
         </div>
 
-        <!-- Registros desse período: esporte e escola -->
+        <!-- Certificados escolares e esportivos -->
         <div class="school-certs">
           <ul class="certs-cards-grid">
             <li class="cert-card">
@@ -444,9 +439,7 @@
           </div>
         </div>
 
-        <!-- Certificados: cartões com descrição e visor, navegação com
-             setas e pontos de página — apresentação de estante, não de
-             arquivo morto. -->
+        <!-- Carrossel horizontal de certificados -->
         <div class="certificates">
           <h3>Certificados</h3>
           <div class="certs-carousel">
@@ -473,177 +466,177 @@
               </svg>
             </button>
             <ul class="certs-strip" id="certsGrid">
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/transforme-se-2026.jpg" aria-label="Ampliar certificado: Transforme-se · Programador de Sistemas">
-                <img src="assets/img/certificados/transforme-se-2026.jpg" alt="Certificado: Transforme-se · Programador de Sistemas" loading="lazy" />
-              </button>
-              <h4>Transforme-se · Programador de Sistemas</h4>
-              <p class="cert-desc">Formação em tecnologia e dados — a mesma turma do Programador de Sistemas do SENAC.</p>
-              <p class="cert-meta">Concluído em jan/2026 · Serasa Experian e SENAC-DF · 280h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/transforme-se-2026.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/senac-logica-2025.jpg" aria-label="Ampliar certificado: Lógica de Programação">
-                <img src="assets/img/certificados/senac-logica-2025.jpg" alt="Certificado: Lógica de Programação" loading="lazy" />
-              </button>
-              <h4>Lógica de Programação</h4>
-              <p class="cert-desc">Algoritmos, estruturas de decisão e repetição aplicadas a problemas reais.</p>
-              <p class="cert-meta">Concluído em 2025 · SENAC-DF · 40h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/senac-logica-2025.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/dio-git-github-2025.jpg" aria-label="Ampliar certificado: Princípios do Git e GitHub">
-                <img src="assets/img/certificados/dio-git-github-2025.jpg" alt="Certificado: Princípios do Git e GitHub" loading="lazy" />
-              </button>
-              <h4>Princípios do Git e GitHub</h4>
-              <p class="cert-desc">Versionamento na prática: repositórios, commits e branches.</p>
-              <p class="cert-meta">Concluído em dez/2025 · DIO · 1h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/dio-git-github-2025.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/dio-colaboracao-github-2026.jpg" aria-label="Ampliar certificado: Colaboração no GitHub">
-                <img src="assets/img/certificados/dio-colaboracao-github-2026.jpg" alt="Certificado: Colaboração no GitHub" loading="lazy" />
-              </button>
-              <h4>Colaboração no GitHub</h4>
-              <p class="cert-desc">Fork, pull requests, issues e revisão de código em equipe.</p>
-              <p class="cert-meta">Concluído em jan/2026 · DIO · 1h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/dio-colaboracao-github-2026.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/dio-github-projects-2026.jpg" aria-label="Ampliar certificado: GitHub Projects">
-                <img src="assets/img/certificados/dio-github-projects-2026.jpg" alt="Certificado: GitHub Projects" loading="lazy" />
-              </button>
-              <h4>GitHub Projects</h4>
-              <p class="cert-desc">Organização de tarefas e fluxo de trabalho kanban no GitHub.</p>
-              <p class="cert-meta">Concluído em jan/2026 · DIO · 1h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/dio-github-projects-2026.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/dio-markdown-2026.jpg" aria-label="Ampliar certificado: Formatação com Markdown">
-                <img src="assets/img/certificados/dio-markdown-2026.jpg" alt="Certificado: Formatação com Markdown" loading="lazy" />
-              </button>
-              <h4>Formatação com Markdown</h4>
-              <p class="cert-desc">Documentação de projetos e READMEs bem formatados.</p>
-              <p class="cert-meta">Concluído em jan/2026 · DIO · 1h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/dio-markdown-2026.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/alura-logica-js-2026.jpg" aria-label="Ampliar certificado: Lógica com JavaScript">
-                <img src="assets/img/certificados/alura-logica-js-2026.jpg" alt="Certificado: Lógica com JavaScript" loading="lazy" />
-              </button>
-              <h4>Lógica com JavaScript</h4>
-              <p class="cert-desc">Mergulho em programação com JavaScript no navegador.</p>
-              <p class="cert-meta">Concluído em 2026 · Alura</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/alura-logica-js-2026.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/alura-internet-2026.jpg" aria-label="Ampliar certificado: Fundamentos da Web">
-                <img src="assets/img/certificados/alura-internet-2026.jpg" alt="Certificado: Fundamentos da Web" loading="lazy" />
-              </button>
-              <h4>Fundamentos da Web</h4>
-              <p class="cert-desc">Como a internet funciona: navegadores, servidores e protocolos.</p>
-              <p class="cert-meta">Concluído em 2026 · Alura</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/alura-internet-2026.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/alura-claude-cowork-2026.jpg" aria-label="Ampliar certificado: Claude Cowork">
-                <img src="assets/img/certificados/alura-claude-cowork-2026.jpg" alt="Certificado: Claude Cowork" loading="lazy" />
-              </button>
-              <h4>Claude Cowork</h4>
-              <p class="cert-desc">Produtividade e gestão de projetos inteligente com IA.</p>
-              <p class="cert-meta">Concluído em 2026 · Alura · 6h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/alura-claude-cowork-2026.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/alura-produtividade-ia-2026.jpg" aria-label="Ampliar certificado: Produtividade com IA">
-                <img src="assets/img/certificados/alura-produtividade-ia-2026.jpg" alt="Certificado: Produtividade com IA" loading="lazy" />
-              </button>
-              <h4>Produtividade com IA</h4>
-              <p class="cert-desc">Rotina otimizada com ferramentas de inteligência artificial.</p>
-              <p class="cert-meta">Concluído em 2026 · Alura · 6h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/alura-produtividade-ia-2026.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/senac-operador-2021.jpg" aria-label="Ampliar certificado: Operador de Computador">
-                <img src="assets/img/certificados/senac-operador-2021.jpg" alt="Certificado: Operador de Computador" loading="lazy" />
-              </button>
-              <h4>Operador de Computador</h4>
-              <p class="cert-desc">Sistemas operacionais e operação de ferramentas de escritório.</p>
-              <p class="cert-meta">Concluído em 2021 · SENAC-DF</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/senac-operador-2021.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/senac-informatica-2025.jpg" aria-label="Ampliar certificado: Informática Básica">
-                <img src="assets/img/certificados/senac-informatica-2025.jpg" alt="Certificado: Informática Básica" loading="lazy" />
-              </button>
-              <h4>Informática Básica</h4>
-              <p class="cert-desc">Base de informática e ferramentas do dia a dia.</p>
-              <p class="cert-meta">Concluído em 2025 · SENAC-DF · 20h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/senac-informatica-2025.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/senac-ed-financeira-2025.jpg" aria-label="Ampliar certificado: Educação Financeira">
-                <img src="assets/img/certificados/senac-ed-financeira-2025.jpg" alt="Certificado: Educação Financeira" loading="lazy" />
-              </button>
-              <h4>Educação Financeira</h4>
-              <p class="cert-desc">Fundamentos de finanças pessoais e orçamento.</p>
-              <p class="cert-meta">Concluído em 2025 · SENAC-DF · 20h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/senac-ed-financeira-2025.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/familia-protegida-2026.jpg" aria-label="Ampliar certificado: Workshop Família Protegida">
-                <img src="assets/img/certificados/familia-protegida-2026.jpg" alt="Certificado: Workshop Família Protegida" loading="lazy" />
-              </button>
-              <h4>Workshop Família Protegida</h4>
-              <p class="cert-desc">Workshop do GDF sobre proteção e cuidado familiar.</p>
-              <p class="cert-meta">Concluído em 2026 · GDF · 6h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/familia-protegida-2026.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
-            <li class="cert-card">
-              <button type="button" class="cert" data-full="assets/img/certificados/fluency-ingles-2026.jpg" aria-label="Ampliar certificado: Inglês — Fluency Academy">
-                <img src="assets/img/certificados/fluency-ingles-2026.jpg" alt="Certificado: Inglês — Fluency Academy" loading="lazy" />
-              </button>
-              <h4>Inglês — Fluency Academy</h4>
-              <p class="cert-desc">Curso de inglês em andamento; declaração de matrícula.</p>
-              <p class="cert-meta">Em andamento · Fluency Academy · 300h</p>
-              <button type="button" class="cert cert-link" data-full="assets/img/certificados/fluency-ingles-2026.jpg">
-                Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-              </button>
-            </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/transforme-se-2026.jpg" aria-label="Ampliar certificado: Transforme-se · Programador de Sistemas">
+                  <img src="assets/img/certificados/transforme-se-2026.jpg" alt="Certificado: Transforme-se · Programador de Sistemas" loading="lazy" />
+                </button>
+                <h4>Transforme-se · Programador de Sistemas</h4>
+                <p class="cert-desc">Formação em tecnologia e dados — a mesma turma do Programador de Sistemas do SENAC.</p>
+                <p class="cert-meta">Concluído em jan/2026 · Serasa Experian e SENAC-DF · 280h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/transforme-se-2026.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/senac-logica-2025.jpg" aria-label="Ampliar certificado: Lógica de Programação">
+                  <img src="assets/img/certificados/senac-logica-2025.jpg" alt="Certificado: Lógica de Programação" loading="lazy" />
+                </button>
+                <h4>Lógica de Programação</h4>
+                <p class="cert-desc">Algoritmos, estruturas de decisão e repetição aplicadas a problemas reais.</p>
+                <p class="cert-meta">Concluído em 2025 · SENAC-DF · 40h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/senac-logica-2025.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/dio-git-github-2025.jpg" aria-label="Ampliar certificado: Princípios do Git e GitHub">
+                  <img src="assets/img/certificados/dio-git-github-2025.jpg" alt="Certificado: Princípios do Git e GitHub" loading="lazy" />
+                </button>
+                <h4>Princípios do Git e GitHub</h4>
+                <p class="cert-desc">Versionamento na prática: repositórios, commits e branches.</p>
+                <p class="cert-meta">Concluído em dez/2025 · DIO · 1h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/dio-git-github-2025.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/dio-colaboracao-github-2026.jpg" aria-label="Ampliar certificado: Colaboração no GitHub">
+                  <img src="assets/img/certificados/dio-colaboracao-github-2026.jpg" alt="Certificado: Colaboração no GitHub" loading="lazy" />
+                </button>
+                <h4>Colaboração no GitHub</h4>
+                <p class="cert-desc">Fork, pull requests, issues e revisão de código em equipe.</p>
+                <p class="cert-meta">Concluído em jan/2026 · DIO · 1h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/dio-colaboracao-github-2026.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/dio-github-projects-2026.jpg" aria-label="Ampliar certificado: GitHub Projects">
+                  <img src="assets/img/certificados/dio-github-projects-2026.jpg" alt="Certificado: GitHub Projects" loading="lazy" />
+                </button>
+                <h4>GitHub Projects</h4>
+                <p class="cert-desc">Organização de tarefas e fluxo de trabalho kanban no GitHub.</p>
+                <p class="cert-meta">Concluído em jan/2026 · DIO · 1h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/dio-github-projects-2026.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/dio-markdown-2026.jpg" aria-label="Ampliar certificado: Formatação com Markdown">
+                  <img src="assets/img/certificados/dio-markdown-2026.jpg" alt="Certificado: Formatação com Markdown" loading="lazy" />
+                </button>
+                <h4>Formatação com Markdown</h4>
+                <p class="cert-desc">Documentação de projetos e READMEs bem formatados.</p>
+                <p class="cert-meta">Concluído em jan/2026 · DIO · 1h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/dio-markdown-2026.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/alura-logica-js-2026.jpg" aria-label="Ampliar certificado: Lógica com JavaScript">
+                  <img src="assets/img/certificados/alura-logica-js-2026.jpg" alt="Certificado: Lógica com JavaScript" loading="lazy" />
+                </button>
+                <h4>Lógica com JavaScript</h4>
+                <p class="cert-desc">Mergulho em programação com JavaScript no navegador.</p>
+                <p class="cert-meta">Concluído em 2026 · Alura</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/alura-logica-js-2026.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/alura-internet-2026.jpg" aria-label="Ampliar certificado: Fundamentos da Web">
+                  <img src="assets/img/certificados/alura-internet-2026.jpg" alt="Certificado: Fundamentos da Web" loading="lazy" />
+                </button>
+                <h4>Fundamentos da Web</h4>
+                <p class="cert-desc">Como a internet funciona: navegadores, servidores e protocolos.</p>
+                <p class="cert-meta">Concluído em 2026 · Alura</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/alura-internet-2026.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/alura-claude-cowork-2026.jpg" aria-label="Ampliar certificado: Claude Cowork">
+                  <img src="assets/img/certificados/alura-claude-cowork-2026.jpg" alt="Certificado: Claude Cowork" loading="lazy" />
+                </button>
+                <h4>Claude Cowork</h4>
+                <p class="cert-desc">Produtividade e gestão de projetos inteligente com IA.</p>
+                <p class="cert-meta">Concluído em 2026 · Alura · 6h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/alura-claude-cowork-2026.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/alura-produtividade-ia-2026.jpg" aria-label="Ampliar certificado: Produtividade com IA">
+                  <img src="assets/img/certificados/alura-produtividade-ia-2026.jpg" alt="Certificado: Produtividade com IA" loading="lazy" />
+                </button>
+                <h4>Produtividade com IA</h4>
+                <p class="cert-desc">Rotina otimizada com ferramentas de inteligência artificial.</p>
+                <p class="cert-meta">Concluído em 2026 · Alura · 6h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/alura-produtividade-ia-2026.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/senac-operador-2021.jpg" aria-label="Ampliar certificado: Operador de Computador">
+                  <img src="assets/img/certificados/senac-operador-2021.jpg" alt="Certificado: Operador de Computador" loading="lazy" />
+                </button>
+                <h4>Operador de Computador</h4>
+                <p class="cert-desc">Sistemas operacionais e operação de ferramentas de escritório.</p>
+                <p class="cert-meta">Concluído em 2021 · SENAC-DF</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/senac-operador-2021.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/senac-informatica-2025.jpg" aria-label="Ampliar certificado: Informática Básica">
+                  <img src="assets/img/certificados/senac-informatica-2025.jpg" alt="Certificado: Informática Básica" loading="lazy" />
+                </button>
+                <h4>Informática Básica</h4>
+                <p class="cert-desc">Base de informática e ferramentas do dia a dia.</p>
+                <p class="cert-meta">Concluído em 2025 · SENAC-DF · 20h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/senac-informatica-2025.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/senac-ed-financeira-2025.jpg" aria-label="Ampliar certificado: Educação Financeira">
+                  <img src="assets/img/certificados/senac-ed-financeira-2025.jpg" alt="Certificado: Educação Financeira" loading="lazy" />
+                </button>
+                <h4>Educação Financeira</h4>
+                <p class="cert-desc">Fundamentos de finanças pessoais e orçamento.</p>
+                <p class="cert-meta">Concluído em 2025 · SENAC-DF · 20h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/senac-ed-financeira-2025.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/familia-protegida-2026.jpg" aria-label="Ampliar certificado: Workshop Família Protegida">
+                  <img src="assets/img/certificados/familia-protegida-2026.jpg" alt="Certificado: Workshop Família Protegida" loading="lazy" />
+                </button>
+                <h4>Workshop Família Protegida</h4>
+                <p class="cert-desc">Workshop do GDF sobre proteção e cuidado familiar.</p>
+                <p class="cert-meta">Concluído em 2026 · GDF · 6h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/familia-protegida-2026.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="cert-card">
+                <button type="button" class="cert" data-full="assets/img/certificados/fluency-ingles-2026.jpg" aria-label="Ampliar certificado: Inglês — Fluency Academy">
+                  <img src="assets/img/certificados/fluency-ingles-2026.jpg" alt="Certificado: Inglês — Fluency Academy" loading="lazy" />
+                </button>
+                <h4>Inglês — Fluency Academy</h4>
+                <p class="cert-desc">Curso de inglês em andamento; declaração de matrícula.</p>
+                <p class="cert-meta">Em andamento · Fluency Academy · 300h</p>
+                <button type="button" class="cert cert-link" data-full="assets/img/certificados/fluency-ingles-2026.jpg">
+                  Ver certificado <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </button>
+              </li>
             </ul>
           </div>
           <div class="certs-dots" id="certsDots" aria-hidden="true"></div>
         </div>
 
-        <!-- Visor do certificado ampliado -->
+        <!-- Modal de visualização do certificado -->
         <dialog class="cert-dialog" id="certDialog" aria-label="Certificado ampliado">
           <button type="button" class="cert-close" id="certClose" aria-label="Fechar">&times;</button>
           <img id="certImage" src="" alt="" />
@@ -657,49 +650,48 @@
           <h2 id="competencias-titulo">Competências</h2>
         </header>
 
-        <!-- Lista oculta: o leitor abre se quiser ver — minimalista -->
         <details class="skills-details">
           <summary>Ver competências</summary>
           <div class="skills">
-          <div class="skills-col">
-            <h3>Técnicas</h3>
-            <ul>
-              <li>Node.js</li>
-              <li>TypeScript</li>
-              <li>JavaScript (ES6+)</li>
-              <li>Python</li>
-              <li>APIs RESTful</li>
-              <li>Webhooks</li>
-              <li>SQL</li>
-              <li>PostgreSQL</li>
-              <li>MySQL</li>
-              <li>Modelagem relacional</li>
-              <li>Git e GitHub</li>
-              <li>Testes unitários</li>
-              <li>Documentação de APIs</li>
-              <li>Scrum e Kanban</li>
-              <li>GitHub Copilot e Claude AI</li>
-            </ul>
-          </div>
-          <div class="skills-col">
-            <h3>Comportamentais</h3>
-            <ul>
-              <li>Raciocínio lógico</li>
-              <li>Resolução de problemas</li>
-              <li>Atenção aos detalhes e conciliação</li>
-              <li>Organização e estruturação</li>
-              <li>Aprendizado rápido e contínuo</li>
-              <li>Comunicação objetiva</li>
-              <li>Trabalho em equipe</li>
-              <li>Orientação a prazos</li>
-              <li>Visão de processos de negócio</li>
-            </ul>
-          </div>
+            <div class="skills-col">
+              <h3>Técnicas</h3>
+              <ul>
+                <li>Node.js</li>
+                <li>TypeScript</li>
+                <li>JavaScript (ES6+)</li>
+                <li>Python</li>
+                <li>APIs RESTful</li>
+                <li>Webhooks</li>
+                <li>SQL</li>
+                <li>PostgreSQL</li>
+                <li>MySQL</li>
+                <li>Modelagem relacional</li>
+                <li>Git e GitHub</li>
+                <li>Testes unitários</li>
+                <li>Documentação de APIs</li>
+                <li>Scrum e Kanban</li>
+                <li>GitHub Copilot e Claude AI</li>
+              </ul>
+            </div>
+            <div class="skills-col">
+              <h3>Comportamentais</h3>
+              <ul>
+                <li>Raciocínio lógico</li>
+                <li>Resolução de problemas</li>
+                <li>Atenção aos detalhes e conciliação</li>
+                <li>Organização e estruturação</li>
+                <li>Aprendizado rápido e contínuo</li>
+                <li>Comunicação objetiva</li>
+                <li>Trabalho em equipe</li>
+                <li>Orientação a prazos</li>
+                <li>Visão de processos de negócio</li>
+              </ul>
+            </div>
           </div>
         </details>
       </section>
 
-      <!-- CONTATO: CLASSIFICADOS -->
+      <!-- CONTATO -->
       <section id="contato" class="section container" aria-labelledby="contato-titulo">
         <header class="section-head">
           <h2 id="contato-titulo">Contato</h2>
@@ -760,8 +752,7 @@
             <span class="ad-cta"><i class="fa-brands fa-github" aria-hidden="true"></i> Ver repositórios</span>
           </a>
 
-          <!-- Anúncio-resposta: a pessoa descreve o projeto e a mensagem
-               sai pronta pelo canal que ela escolher (sem servidor). -->
+          <!-- Formulário de contato direto (WhatsApp / e-mail) -->
           <article class="ad ad-form">
             <h3>Conte sobre o seu projeto</h3>
             <p>
@@ -808,8 +799,7 @@
 
     <footer class="colophon">
       <div class="container">
-        <!-- Horizonte de Brasília: quadras, Congresso Nacional, Torre de TV.
-             Desenha-se quando o rodapé entra na tela. -->
+        <!-- Horizonte de Brasília (SVG animado) -->
         <svg
           class="skyline"
           id="skyline"
@@ -818,24 +808,24 @@
           aria-hidden="true"
           focusable="false"
         >
-          <!-- quadras à esquerda -->
+          <!-- Quadras esquerda -->
           <rect pathLength="1" x="40" y="66" width="46" height="23" />
           <rect pathLength="1" x="96" y="60" width="30" height="29" />
           <rect pathLength="1" x="134" y="70" width="52" height="19" />
           <rect pathLength="1" x="196" y="63" width="24" height="26" />
-          <!-- Congresso: plataforma, cúpula do Senado, torres, cuia da Câmara -->
+          <!-- Congresso Nacional -->
           <path pathLength="1" d="M300 78 H500" />
           <path pathLength="1" d="M326 78 A20 20 0 0 1 366 78" />
           <rect pathLength="1" x="388" y="14" width="10" height="64" />
           <rect pathLength="1" x="404" y="14" width="10" height="64" />
           <path pathLength="1" d="M398 42 H404" />
           <path pathLength="1" d="M430 62 H486 Q458 84 430 62 Z" />
-          <!-- quadras e Torre de TV à direita -->
+          <!-- Quadras direita e Torre de TV -->
           <rect pathLength="1" x="560" y="68" width="40" height="21" />
           <rect pathLength="1" x="610" y="61" width="28" height="28" />
           <path pathLength="1" d="M690 89 L700 20 L710 89 M694 58 H706 M700 20 V6" />
           <rect pathLength="1" x="728" y="70" width="36" height="19" />
-          <!-- chão -->
+          <!-- Linha do solo -->
           <path pathLength="1" d="M0 89 H800" />
         </svg>
         <p>
