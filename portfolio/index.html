@@ -114,8 +114,7 @@
       <section class="front container" aria-labelledby="manchete">
         <article class="lead-story">
           <h1 id="manchete">
-            Desenvolvedora de Brasília transforma regras de negócio em sistemas
-            para o dia a dia
+            Desenvolvedora de Brasília
           </h1>
           <p class="deck">
             Valérya trabalha com back-end, APIs RESTful, bancos de dados e
@@ -222,14 +221,14 @@
                 ><i class="fa-brands fa-github" aria-hidden="true"></i> Ver código no GitHub</a
               >
             </article>
-
-            <article class="story" id="proj-portfolio">
-              <figure>
+                 <article class="story" id="proj-senac">
+              <figure class="photo">
                 <img
                   src="assets/img/c530263e-ee1d-4188-bc8b-03d2e329e44b.jpg"
-                  alt="Ilustração do Portfólio="lazy"
                 />
-              </figure>
+                <figcaption>Portfólio, desenvolvedora de
+          software.</figcaption>
+            <article class="story" id="proj-portfolio" data-preview="https://postfolio-umber.vercel.app/">
               <h3>Portfólio</h3>
               <p>
                 Aplicação web com identidade visual inspirada em jornal impresso.
@@ -241,7 +240,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 class="story-link"
-                ><i class="fa-brands fa-github" aria-hidden="true"></i> Conferir o projeto.</a
+                ><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Conferir o projeto</a
               >
             </article>
 
@@ -278,21 +277,29 @@
 
           <div class="profile-text">
             <p class="has-dropcap">
-              Antes do código, vieram as quadras: na escola, fui destaque como
-              atleta e entrava em toda atividade extra que aparecesse — dos
-              Jogos Escolares da Juventude ao Campeonato Brasileiro de Karatê.
-              O esporte me ensinou cedo o que aplico até hoje no
-              desenvolvimento: disciplina, constância e gosto por desafio.
+              Antes do código, vieram os tabuleiros e os tatames: comecei no
+              xadrez em 2014 e, no ano seguinte, no karatê. Em 2015 fui campeã
+              estadual de xadrez e terminei o ano entre os dez primeiros do
+              Brasil; no karatê, competi dos Jogos Escolares da Juventude, e ao
+              Campeonato Brasileiro de Karatê. Mais do que resultados, o esporte me
+              deixou hábitos que carrego até hoje para o código: disciplina de
+              treino, paciência para pensar antes de cada jogada e respeito
+              por quem sabe mais do que eu.
+            </p>
+            <p>
+              Trabalho desde os 16 anos, quando entrei como jovem aprendiz.
+              Passei pelo atendimento, pelas vendas e
+              conciliação de dados em ERPs — e foi nesse caminho que percebi
+              que o que eu mais gostava era entender a regra de negócio por
+              trás de cada tela.
             </p>
             <p>
               Hoje sou graduanda em Análise e Desenvolvimento de Sistemas pela
-              Unopar e estou concluindo a Formação Full Stack Avançada do
-              SENAI-DF.
-            </p>
-            <p>
-              Minha trajetória combina raciocínio lógico forte, auditoria e
-              conciliação de dados em ERPs, controle de regras de negócio e
-              desenvolvimento funcional com Node.js, TypeScript, Python e SQL.
+              Unopar e estou concluindo a Formação Full Stack do
+              SENAI-DF. No dia a dia dos meus projetos, trabalho com back-end:
+              Node.js, TypeScript, Python e SQL, construindo APIs REST,
+              modelando bancos de dados relacionais e versionando tudo com
+              Git.
             </p>
             <p>
               O grande divisor de águas na minha jornada foi participar do
@@ -634,6 +641,18 @@
         </div>
 
         <!-- Modal de visualização do certificado -->
+        <!-- Visor de pré-visualização: a demo abre num iframe sobre o
+             jornal; o leitor espia sem sair da página. -->
+        <dialog class="cert-dialog preview-dialog" id="previewDialog" aria-label="Pré-visualização do projeto">
+          <button type="button" class="cert-close" id="previewClose" aria-label="Fechar pré-visualização">&times;</button>
+          <p class="preview-title" id="previewTitle"></p>
+          <iframe id="previewFrame" title="Pré-visualização do projeto" loading="lazy" referrerpolicy="no-referrer"></iframe>
+          <p class="preview-note">
+            Pré-visualização ao vivo —
+            <a id="previewOpen" href="#" target="_blank" rel="noopener noreferrer">abrir em tela cheia</a>.
+          </p>
+        </dialog>
+
         <dialog class="cert-dialog" id="certDialog" aria-label="Certificado ampliado">
           <button type="button" class="cert-close" id="certClose" aria-label="Fechar">&times;</button>
           <img id="certImage" src="" alt="" />
