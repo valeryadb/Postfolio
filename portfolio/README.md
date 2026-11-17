@@ -65,3 +65,19 @@ frameworks e sem build, por decisão de projeto.
 ## ▶️ Rodando localmente
 
 Basta abrir o `index.html` no navegador — não há dependências nem build.
+## Manutenção do conteúdo
+
+**Fotos dos projetos em ajuste final** — salve a tela do sistema em
+`assets/img/projetos/` com o nome do projeto (`erp.jpg`, `estoque.jpg`,
+`crm.jpg`, `financeiro.jpg`). Enquanto o arquivo não existir, o card mostra
+o quadro "Fotos em breve"; quando existir, a foto aparece sozinha — sem
+mexer em código.
+
+**Pré-visualização** — adicione `data-preview="URL-do-deploy"` no
+`<article>` de um projeto e o botão "Pré-visualizar" é criado
+automaticamente (a demo abre num visor, sem sair da página).
+
+**Painel do GitHub** — os dados (repositórios, último push, linguagens e
+contribuições) são buscados ao vivo na API pública do GitHub, no navegador
+de quem visita, com cache de 10 minutos para respeitar o limite de 60
+consultas por hora. Para trocar de conta, altere `data-user` em `#ghPanel`.

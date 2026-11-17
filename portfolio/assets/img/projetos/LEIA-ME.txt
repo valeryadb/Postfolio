@@ -1,0 +1,6 @@
+Coloque aqui as telas dos sistemas em ajuste final, com estes nomes:
+
+  erp.jpg  estoque.jpg  crm.jpg  financeiro.jpg
+
+Enquanto o arquivo nao existir, o site mostra o quadro "Fotos em breve".
+Formato ideal: print da tela inteira, 1600x1000 px (proporcao 16:10).

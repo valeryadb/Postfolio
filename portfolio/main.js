@@ -131,6 +131,65 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ------------------------------------------------------------------
+  // FOTOS PENDENTES: figure[data-pending] tenta carregar a imagem; se o
+  // arquivo ainda não existe (404), troca por um quadro "Fotos em breve".
+  // Para publicar a foto real, basta soltar o .jpg na pasta — sem código.
+  // ------------------------------------------------------------------
+  document.querySelectorAll(".photo[data-pending] img").forEach((img) => {
+    const swap = () => {
+      const box = document.createElement("div");
+      box.className = "photo-placeholder";
+      box.setAttribute("role", "img");
+      box.setAttribute("aria-label", `${img.alt} — fotos em breve`);
+      box.innerHTML = "<strong>Fotos em breve</strong><span>Sistema em ajuste final</span>";
+      img.replaceWith(box);
+    };
+    // se o erro aconteceu antes deste script rodar, o evento já passou
+    if (img.complete && img.naturalWidth === 0) swap();
+    else img.addEventListener("error", swap, { once: true });
+  });
+
+  // ------------------------------------------------------------------
+  // PRÉ-VISUALIZAÇÃO: todo card com data-preview="URL" ganha o botão
+  // "Pré-visualizar", que abre a demo num iframe sobre a página. O src
+  // só é definido ao abrir e é limpo ao fechar, para o site externo não
+  // carregar junto com o jornal nem continuar rodando escondido.
+  // ------------------------------------------------------------------
+  const previewDialog = document.getElementById("previewDialog");
+  if (previewDialog && typeof previewDialog.showModal === "function") {
+    const frame = document.getElementById("previewFrame");
+    const titleEl = document.getElementById("previewTitle");
+    const openLink = document.getElementById("previewOpen");
+
+    document.querySelectorAll(".story[data-preview]").forEach((card) => {
+      const url = card.dataset.preview;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "story-link story-preview";
+      btn.innerHTML = '<i class="fa-regular fa-eye" aria-hidden="true"></i> Pré-visualizar';
+      btn.addEventListener("click", () => {
+        titleEl.textContent = card.querySelector("h3")?.textContent || "Projeto";
+        frame.src = url;
+        if (openLink) openLink.href = url;
+        previewDialog.showModal();
+      });
+      (card.querySelector(".story-links") || card).appendChild(btn);
+    });
+
+    previewDialog.addEventListener("close", () => {
+      frame.src = "about:blank"; // descarrega a demo ao fechar
+    });
+    document.getElementById("previewClose")?.addEventListener("click", () => previewDialog.close());
+    previewDialog.addEventListener("click", (event) => {
+      if (event.target === previewDialog) previewDialog.close();
+    });
+  }
+
+  // GitHub: terminal interativo + grade de contribuições (funções no fim do arquivo)
+  initGitHubTerminal(reducedMotion);
+  initContributions(document.getElementById("ghPanel")?.dataset.user);
+
   // Rotação cíclica dos projetos
   const projectsList = document.getElementById("projectsList");
   if (projectsList) {
@@ -146,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!reducedMotion.matches && "IntersectionObserver" in window) {
     const singles = document.querySelectorAll(
       ".section-head, .career-lede, .portrait, .profile-text, .pullquote, " +
-        ".career-group, .certificates, .classifieds > *"
+        ".career-group, .certificates, .gh-panel, .classifieds > *"
     );
     const staggered = document.querySelectorAll(
       ".skills-col li, .certs-strip li, .school-certs li, .school-certs .certs-cards-grid li"
@@ -489,5 +548,352 @@ class ProjectRotator {
   announce() {
     const title = this.list.firstElementChild?.querySelector("h3")?.textContent;
     if (this.status && title) this.status.textContent = `Em destaque: ${title}`;
+  }
+}
+
+/* =====================================================================
+   GITHUB
+   Os dados vêm da API pública do GitHub, buscados no navegador de quem
+   visita (o site continua estático: sem servidor, sem chave de API).
+   Sem autenticação, a API permite 60 consultas/hora por IP — por isso
+   guardamos as respostas por 10 minutos no sessionStorage.
+   ===================================================================== */
+async function fetchJSONCached(url, key, ttlMs = 10 * 60 * 1000) {
+  try {
+    const cached = JSON.parse(sessionStorage.getItem(key) || "null");
+    if (cached && Date.now() - cached.t < ttlMs) return cached.d;
+  } catch {
+    /* navegação privada: segue sem cache */
+  }
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(res.status === 403 || res.status === 429 ? "limite" : `http ${res.status}`);
+  const data = await res.json();
+  try {
+    sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), d: data }));
+  } catch {
+    /* armazenamento cheio ou bloqueado: tudo bem */
+  }
+  return data;
+}
+
+const LANG_COLORS = {
+  JavaScript: "#d6bf55",
+  TypeScript: "#5a8fd6",
+  Python: "#4fae9b",
+  HTML: "#e07850",
+  CSS: "#9b7fd6",
+  Java: "#b8865a",
+  Shell: "#8bc34a",
+  "Jupyter Notebook": "#da7b4f",
+};
+const langColor = (name) => LANG_COLORS[name] || "#8a8a8a";
+
+function initGitHubTerminal(reducedMotion) {
+  const panel = document.getElementById("ghPanel");
+  const screen = document.getElementById("termScreen");
+  const form = document.getElementById("termForm");
+  const input = document.getElementById("termCmd");
+  const chips = document.getElementById("termChips");
+  if (!panel || !screen || !form || !input || !chips) return;
+
+  const user = panel.dataset.user;
+  const instant = reducedMotion.matches;
+  const sleep = (ms) => new Promise((r) => setTimeout(r, instant ? 0 : ms));
+  const rtf = new Intl.RelativeTimeFormat("pt-BR", { numeric: "auto" });
+
+  // Os links vêm da própria página: se o currículo mudar no HTML,
+  // o terminal acompanha sozinho (uma fonte da verdade só).
+  const links = {
+    curriculo: document.querySelector('a[href*="docs.google.com"]')?.href,
+    linkedin: document.querySelector('a[href*="linkedin.com"]')?.href,
+  };
+
+  // ---------- impressão no terminal ----------
+  // Tudo que vem de fora (o que o visitante digita, nomes de repositório)
+  // entra com textContent, nunca innerHTML — é o que impede XSS.
+  const line = (cls = "") => {
+    const p = document.createElement("p");
+    p.className = `t-line ${cls}`.trim();
+    screen.appendChild(p);
+    return p;
+  };
+  // Rola para o fim DEPOIS que o conteúdo entra na tela (rolar dentro de
+  // line() mediria a linha ainda vazia e cortaria o final).
+  new MutationObserver(() => {
+    screen.scrollTop = screen.scrollHeight;
+  }).observe(screen, { childList: true, subtree: true, characterData: true });
+  const say = (text, cls) => {
+    const p = line(cls);
+    p.textContent = text;
+    return p;
+  };
+  const userTag = () => {
+    const s = document.createElement("span");
+    s.className = "t-user";
+    s.textContent = "visitante@valerya";
+    return s;
+  };
+  const echo = (cmd) => {
+    const p = line("t-gap");
+    p.append(userTag(), ":~$ ", cmd);
+  };
+  const link = (text, href) => {
+    const a = document.createElement("a");
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.textContent = text;
+    return a;
+  };
+
+  async function typeCommand(cmd) {
+    const p = line("t-gap");
+    const typed = document.createTextNode("");
+    p.append(userTag(), ":~$ ", typed);
+    if (instant) {
+      typed.data = cmd;
+      return;
+    }
+    p.classList.add("t-cursor");
+    for (const ch of cmd) {
+      typed.data += ch;
+      await sleep(42);
+    }
+    await sleep(260);
+    p.classList.remove("t-cursor");
+  }
+
+  function ago(iso) {
+    const diff = (new Date(iso) - Date.now()) / 1000; // ISO com "Z": fuso resolvido
+    const units = [
+      ["year", 31536000],
+      ["month", 2592000],
+      ["week", 604800],
+      ["day", 86400],
+      ["hour", 3600],
+      ["minute", 60],
+    ];
+    for (const [unit, secs] of units) {
+      if (Math.abs(diff) >= secs) return rtf.format(Math.round(diff / secs), unit);
+    }
+    return "agora há pouco";
+  }
+
+  // ---------- gh profile view ----------
+  async function profileView(typed) {
+    if (typed) await typeCommand(`gh profile view ${user}`);
+    const loading = say("→ consultando a API do GitHub…", "t-dim");
+    try {
+      const [profile, repos] = await Promise.all([
+        fetchJSONCached(`https://api.github.com/users/${user}`, "gh:profile"),
+        fetchJSONCached(`https://api.github.com/users/${user}/repos?per_page=100&sort=pushed`, "gh:repos"),
+      ]);
+      loading.remove();
+
+      const p1 = line();
+      p1.append("→ ");
+      const n = document.createElement("span");
+      n.className = "t-strong";
+      n.textContent = `${profile.public_repos} repositórios públicos`;
+      p1.append(n);
+
+      // o repositório com o mesmo nome do usuário é o README do perfil
+      const recent = repos.filter((r) => r.name.toLowerCase() !== user.toLowerCase());
+      if (recent[0]) {
+        const p2 = line();
+        const quem = document.createElement("span");
+        quem.className = "t-dim";
+        quem.textContent = ` (${recent[0].name})`;
+        p2.append(`→ último push: ${ago(recent[0].pushed_at)}`, quem);
+
+        const p3 = line();
+        p3.append("→ atividade recente: ");
+        recent.slice(0, 3).forEach((r, i) => {
+          if (i) p3.append(", ");
+          p3.append(link(r.name, r.html_url));
+        });
+      }
+
+      const counts = {};
+      repos.forEach((r) => {
+        if (r.language) counts[r.language] = (counts[r.language] || 0) + 1;
+      });
+      const langs = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      if (langs.length) {
+        say("→ linguagens por repositório");
+        const bar = document.createElement("div");
+        bar.className = "t-langbar";
+        bar.setAttribute("aria-hidden", "true");
+        langs.forEach(([name, qtd]) => {
+          const seg = document.createElement("i");
+          seg.style.flex = String(qtd);
+          seg.style.background = langColor(name);
+          bar.appendChild(seg);
+        });
+        screen.appendChild(bar);
+        const legend = line("t-legend");
+        langs.forEach(([name, qtd]) => {
+          const s = document.createElement("span");
+          s.style.setProperty("--c", langColor(name));
+          s.textContent = `${name} ${qtd}`;
+          legend.appendChild(s);
+        });
+      }
+    } catch (err) {
+      loading.remove();
+      say(
+        err.message === "limite"
+          ? "→ a API do GitHub pediu uma pausa (limite de consultas por hora)."
+          : "→ não consegui falar com a API do GitHub agora.",
+        "t-dim"
+      );
+      const p = line();
+      p.append("→ o perfil continua em ", link(`github.com/${user}`, `https://github.com/${user}`));
+    }
+  }
+
+  // ---------- comandos ----------
+  const COMMANDS = {
+    "/ajuda": () => {
+      say("comandos disponíveis:");
+      [
+        ["/sobre", "quem é a Valérya"],
+        ["/curriculo", "abre o currículo"],
+        ["/linkedin", "abre o LinkedIn"],
+        ["/contato", "vai para a seção de contato"],
+        ["/github", "atualiza os dados do GitHub"],
+        ["/limpar", "limpa a tela"],
+      ].forEach(([c, d]) => say(`  ${c.padEnd(12)} ${d}`, "t-dim"));
+    },
+    "/sobre": () => {
+      say("Valérya Dias — desenvolvedora back-end em Brasília, DF.");
+      say("Node.js · TypeScript · Python · SQL · APIs REST", "t-dim");
+      say("Do xadrez para o código: pensar antes de cada jogada.", "t-dim");
+    },
+    "/curriculo": () => {
+      if (!links.curriculo) return say("currículo indisponível no momento.", "t-dim");
+      window.open(links.curriculo, "_blank", "noopener");
+      say("abrindo o currículo em uma nova aba…", "t-ok");
+    },
+    "/linkedin": () => {
+      if (!links.linkedin) return say("LinkedIn indisponível no momento.", "t-dim");
+      window.open(links.linkedin, "_blank", "noopener");
+      say("abrindo o LinkedIn em uma nova aba…", "t-ok");
+    },
+    "/contato": () => {
+      say("indo para a seção de contato…", "t-ok");
+      document.getElementById("contato")?.scrollIntoView({ behavior: instant ? "auto" : "smooth" });
+    },
+    "/github": () => profileView(false),
+    "/limpar": () => {
+      screen.textContent = "";
+    },
+  };
+  const ALIASES = { "/help": "/ajuda", "/clear": "/limpar", "/cv": "/curriculo", "/resume": "/curriculo" };
+
+  let busy = false;
+  async function run(raw) {
+    const text = raw.trim();
+    if (!text || busy) return;
+    busy = true;
+    echo(text);
+    let cmd = text.toLowerCase();
+    if (!cmd.startsWith("/")) cmd = `/${cmd}`;
+    const fn = COMMANDS[ALIASES[cmd] || cmd];
+    try {
+      // window.open roda aqui sem await antes: ainda dentro do clique,
+      // então o bloqueador de pop-up do navegador não barra
+      if (fn) await fn();
+      else say(`comando não encontrado: ${text} — digite /ajuda`, "t-dim");
+    } finally {
+      busy = false;
+    }
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    run(input.value);
+    input.value = "";
+  });
+  chips.addEventListener("click", (event) => {
+    const btn = event.target.closest("button[data-cmd]");
+    if (btn) run(btn.dataset.cmd);
+  });
+
+  // Com JS, o terminal vira interativo; a abertura roda quando aparece na tela
+  form.hidden = false;
+  chips.hidden = false;
+
+  let started = false;
+  const start = async () => {
+    if (started) return;
+    started = true;
+    busy = true;
+    screen.textContent = "";
+    say("Valérya.dev — terminal do portfólio", "t-dim");
+    say("Digite /ajuda para ver os comandos.", "t-dim");
+    await profileView(true);
+    busy = false;
+  };
+
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          io.disconnect();
+          start();
+        }
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(panel);
+  } else {
+    start();
+  }
+}
+
+async function initContributions(user) {
+  const box = document.getElementById("ghContrib");
+  const grid = document.getElementById("ghContribGrid");
+  const totalEl = document.getElementById("ghContribTotal");
+  if (!user || !box || !grid || !totalEl) return;
+
+  try {
+    // O GitHub não expõe contribuições sem autenticação; este serviço
+    // público lê o calendário do perfil e devolve em JSON.
+    const data = await fetchJSONCached(
+      `https://github-contributions-api.jogruber.de/v4/${user}?y=last`,
+      "gh:contrib",
+      60 * 60 * 1000
+    );
+    const days = data?.contributions;
+    if (!Array.isArray(days) || !days.length) return;
+
+    // A 1ª coluna começa no dia da semana do primeiro dia. Data montada
+    // com (ano, mês, dia) = horário LOCAL — new Date("AAAA-MM-DD") seria
+    // UTC e, em Brasília, voltaria para o dia anterior.
+    const [y, m, d] = days[0].date.split("-").map(Number);
+    const offset = new Date(y, m - 1, d).getDay();
+
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < offset; i++) {
+      const cell = document.createElement("i");
+      cell.className = "is-empty";
+      frag.appendChild(cell);
+    }
+    days.forEach((day) => {
+      const cell = document.createElement("i");
+      cell.dataset.l = String(day.level);
+      cell.title = `${day.count} contribuições em ${day.date.split("-").reverse().join("/")}`;
+      frag.appendChild(cell);
+    });
+    grid.appendChild(frag);
+
+    const total = data.total?.lastYear ?? days.reduce((s, day) => s + day.count, 0);
+    totalEl.textContent = String(total);
+    box.hidden = false;
+    grid.scrollLeft = grid.scrollWidth; // celular: começa nas semanas recentes
+  } catch {
+    /* serviço fora do ar: o bloco simplesmente não aparece */
   }
 }
