@@ -4,7 +4,7 @@ Landing page profissional construída com arquitetura limpa de 3 camadas:
 HTML5 semântico, CSS3 com design tokens e JavaScript modular — sem
 frameworks e sem build, por decisão de projeto.
 
-🚀 **Link do projeto:** [valeryadb.github.io/portfolio](https://valeryadb.github.io/portfolio/) <!-- atualize após o deploy -->
+🚀 **Link do projeto:** [valeryadb.github.io/portfolio](https://postfolio-umber.vercel.app/) <!-- atualize após o deploy -->
 
 ---
 
